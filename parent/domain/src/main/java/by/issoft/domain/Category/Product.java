@@ -1,33 +1,69 @@
 package by.issoft.domain.Category;
 
+import domainHelpers.DomainDataValidators;
+
 public class Product {
 
-    private static  String name;
-    private static  Integer price;
-    private static  Integer rate;
+    private String name;
+    private Float price;
+    private Float rate;
 
+    public Product(){}
 
-    public static String getName() {
-        return name;
+    public Product(String name, Float price, Float rate){
+        setName(name);
+        setPrice(price);
+        setRate(rate);
     }
 
-    public static void setName(String name) {
-        Product.name = name;
+    @Override
+    public String toString() {
+
+        return String.format(" Product name: '%s'," +
+                " Price: %.2f, " +
+                "Rate: %.1f",
+                this.name, this.price, this.rate);
     }
 
-    public static Integer getPrice() {
-        return price;
+
+    public  String getName()
+    {
+        return this.name;
     }
 
-    public static void setPrice(Integer price) {
-        Product.price = price;
+    public void setName(String name) {
+        if (0 == name.length() && name.length() > 150) {
+            this.name = DomainDataValidators.stringValidator(name);
+        }
+        else{
+            throw new RuntimeException("Too short or to long product name");
+        }
     }
 
-    public static Integer getRate() {
-        return rate;
+    public  Float getPrice()
+    {
+        return this.price;
     }
 
-    public static void setRate(Integer rate) {
-        Product.rate = rate;
+    public  void setPrice(Float price) {
+        if (price < 0){
+            throw new RuntimeException("Rate cannot be less then zero");
+        }
+        else {
+            this.price = price;
+        }
+    }
+
+    public  Float getRate() {
+        return this.rate;
+    }
+
+    public  void setRate(Float rate) {
+        if (rate < 0){
+            throw new RuntimeException("Rate cannot be less then zero");
+        }
+        else {
+            this.rate = rate;
+        }
     }
 }
