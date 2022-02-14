@@ -2,32 +2,32 @@ package by.issoft.domain.Category;
 
 public class Product {
 
-    private static  String name;
-    private static  Integer price;
-    private static  Integer rate;
+    private   String name;
+    private   Integer price;
+    private   Integer rate;
 
 
-    public static String getName() {
-        return name;
+    public  String getName() {
+        return this.name;
     }
 
-    public static void setName(String name) {
-        Product.name = name;
+    public  void setName(String name) {
+        this.name = name;
     }
 
-    public static Integer getPrice() {
-        return price;
+    public  Integer getPrice() {
+        return this.price;
     }
 
-    public static void setPrice(Integer price) {
-        Product.price = price;
+    public  void setPrice(Integer price) {
+        this.price = price;
     }
 
-    public static Integer getRate() {
-        return rate;
+    public  Integer getRate() {
+        return this.rate;
     }
 
-    public static void setRate(Integer rate) {
-        Product.rate = rate;
+    public  void setRate(Integer rate) {
+        this.rate = rate;
     }
 }
