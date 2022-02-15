@@ -1,9 +1,8 @@
 package by.issoft.domain.Category;
 
-import domainHelpers.DomainDataValidators;
+
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class Category {
