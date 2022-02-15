@@ -1,6 +1,5 @@
 package by.issoft.domain.Category;
 
-import domainHelpers.DomainDataValidators;
 
 public class Product {
 
@@ -8,12 +7,10 @@ public class Product {
     private Float price;
     private Float rate;
 
-    public Product(){}
-
     public Product(String name, Float price, Float rate){
-        setName(name);
-        setPrice(price);
-        setRate(rate);
+        this.name = name;
+        this.price = price;
+        this.rate = rate;
     }
 
     @Override
@@ -26,44 +23,4 @@ public class Product {
     }
 
 
-    public  String getName()
-    {
-        return this.name;
-    }
-
-    public void setName(String name) {
-        if (0 == name.length() && name.length() > 150) {
-            this.name = DomainDataValidators.stringValidator(name);
-        }
-        else{
-            throw new RuntimeException("Too short or to long product name");
-        }
-    }
-
-    public  Float getPrice()
-    {
-        return this.price;
-    }
-
-    public  void setPrice(Float price) {
-        if (price < 0){
-            throw new RuntimeException("Rate cannot be less then zero");
-        }
-        else {
-            this.price = price;
-        }
-    }
-
-    public  Float getRate() {
-        return this.rate;
-    }
-
-    public  void setRate(Float rate) {
-        if (rate < 0){
-            throw new RuntimeException("Rate cannot be less then zero");
-        }
-        else {
-            this.rate = rate;
-        }
-    }
 }
