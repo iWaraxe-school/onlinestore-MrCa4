@@ -1,11 +1,11 @@
 package by.issoft.domain.Category;
 
-
 public class Product {
 
-    private String name;
-    private Float price;
-    private Float rate;
+    private   String name;
+    private   Integer price;
+    private   Integer rate;
+
 
     public Product(String name, Float price, Float rate){
         this.name = name;

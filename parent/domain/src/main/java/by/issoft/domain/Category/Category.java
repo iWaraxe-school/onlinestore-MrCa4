@@ -1,7 +1,5 @@
 package by.issoft.domain.Category;
 
-
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,7 +9,6 @@ public class Category {
     private  List<Product> productList;
 
     public Category (String name){
-
         this.name=name;
     }
     
