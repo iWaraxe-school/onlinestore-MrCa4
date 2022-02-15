@@ -1,17 +1,20 @@
 package by.issoft.domain.Category;
 
+import com.github.javafaker.Faker;
+
 import java.util.List;
 
-public class Category {
+abstract public class Category {
 
-    private  String categoryName;
+    private  String name;
     private  List<Product> productList;
 
     public Category (String name){
-        this.categoryName = name;
+        this.name = name;
     }
-    public Category(){};
 
+    protected Category() {
+    }
 
-
+    public abstract String getUsableProductName(Faker faker);
 }

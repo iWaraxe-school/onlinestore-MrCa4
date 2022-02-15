@@ -3,31 +3,24 @@ package by.issoft.domain.Category;
 public class Product {
 
     private   String name;
-    private   Integer price;
-    private   Integer rate;
+    private   Float price;
+    private   Float rate;
 
 
-    public  String getName() {
-        return this.name;
-    }
-
-    public  void setName(String name) {
+    public Product(String name, Float price, Float rate){
         this.name = name;
-    }
-
-    public  Integer getPrice() {
-        return this.price;
-    }
-
-    public  void setPrice(Integer price) {
         this.price = price;
-    }
-
-    public  Integer getRate() {
-        return this.rate;
-    }
-
-    public  void setRate(Integer rate) {
         this.rate = rate;
     }
+
+    @Override
+    public String toString() {
+
+        return String.format(" Product name: '%s'," +
+                        " Price: %.2f, " +
+                        "Rate: %.1f",
+                this.name, this.price, this.rate);
+    }
+
+
 }
