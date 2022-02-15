@@ -13,33 +13,13 @@ public class Category {
 
     public Category (String name){
 
-        setName(name);
+        this.name=name;
     }
-    public Category(){
-
-    }
-
-    public  String getName()
-    {
-        return this.categoryName;
-    }
-
-    public  void setName(String name)
-    {
-        this.categoryName = DomainDataValidators.stringValidator(name);
-    }
-
-    //Work with products
-    public Boolean addProducts(Product product){
-
-       return this.addProducts(new  ArrayList(Arrays.asList(product)));
-    }
-
-    public Boolean addProducts(List<Product> products){
+    
+    public void addProducts(List<Product> products){
         if (productList == null){
         productList = new ArrayList<Product>();}
         productList.addAll(products);
-        return true;
     }
 
     public void listProducts(){
