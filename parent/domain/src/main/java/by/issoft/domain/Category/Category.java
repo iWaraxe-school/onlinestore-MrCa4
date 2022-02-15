@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Category {
 
-    private  String categoryName;
+    private  String name;
     private  List<Product> productList;
 
     public Category (String name){
