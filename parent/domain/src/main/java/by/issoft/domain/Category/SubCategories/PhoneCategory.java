@@ -5,6 +5,6 @@ public class PhoneCategory extends Category {
 
     PhoneCategory(String name){
 
-        super('Phone');
+        super("Phone");
     }
 }
