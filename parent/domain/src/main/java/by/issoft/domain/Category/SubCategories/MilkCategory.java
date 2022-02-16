@@ -4,13 +4,13 @@ import com.github.javafaker.Faker;
 
 public class MilkCategory extends Category {
 
-    public MilkCategory(String name)
+    public MilkCategory()
     {
-        super(name);
+        super("Milk");
     }
-    public MilkCategory(){}
+
     @Override
     public  String getUsableProductName(Faker faker) {
-        return faker.food().fruit();
+        return "Milk with " + faker.food().fruit();
     }
 }

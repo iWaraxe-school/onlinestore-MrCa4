@@ -4,12 +4,12 @@ import com.github.javafaker.Faker;
 
 public class BikeCategory extends Category {
 
-    public BikeCategory(String name){
-        super(name);
+    public BikeCategory(){
+        super("Bike");
     }
-    public BikeCategory(){}
+
     @Override
     public  String getUsableProductName(Faker faker) {
-        return faker.superhero().name();
+        return "Super hero bike: " + faker.superhero().name();
     }
 }

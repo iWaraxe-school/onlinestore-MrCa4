@@ -6,15 +6,13 @@ import com.github.javafaker.Faker;
 
 public class PhoneCategory extends Category {
 
-    public PhoneCategory(String name){
-        super(name);
+    public PhoneCategory()
+    {
+        super("Phone");
     }
-    public PhoneCategory() {}
-
-
 
     @Override
     public  String getUsableProductName(Faker faker) {
-        return faker.company().name();
+        return "Nopia, Model: " + faker.number().digits(2);
     }
 }

@@ -4,11 +4,12 @@ import by.issoft.domain.Category.Category;
 import by.issoft.domain.Category.Product;
 import com.github.javafaker.Faker;
 import org.reflections.Reflections;
-import org.reflections.scanners.SubTypesScanner;
+import org.reflections.scanners.Scanners;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 
 public class RandomStorePopulator {
@@ -19,9 +20,11 @@ public class RandomStorePopulator {
         return faker;
     }
 
+
+    //Получаем список категорий
     public List<Category> getAllCategories(){
         List<Category> categoryList = new ArrayList<Category>();
-        Reflections reflections = new Reflections("by.issoft.domain.Category", new SubTypesScanner());
+        Reflections reflections = new Reflections("by.issoft.domain.Category", Scanners.SubTypes);
         Set<Class<? extends Category>> subTypes =
                 reflections.getSubTypesOf(Category.class);
 
@@ -43,15 +46,26 @@ public class RandomStorePopulator {
 
     }
 
-    private List<Product> generateProductsForCategory(Category category, int countOfProducts){
+    //Получаем готовые продукты
+    public List<Product> getProductsForCategory(Category category){
+        List<Product> resultList = new ArrayList<>();
+        resultList.addAll(generateProductsForCategory(category, new Random().nextInt(10)));
+        return resultList;
+    }
 
+    //Генерация объектов продуктов для категории
+    public List<Product> generateProductsForCategory(Category category, int countOfProducts){
+
+        //Не обязательно,но проверяем
+        countOfProducts =  (countOfProducts == 0) ? 10 : countOfProducts;
         List<Product> productsList = new ArrayList<Product>();
-        for(int i = 0; i<countOfProducts;i++){
+        for(int i = 0; i< countOfProducts;i++){
             productsList.add(new Product(generateProductNameForCurrentCategory(category),generatePrice(),generateRate()));
         }
         return productsList;
     }
 
+    //Генерация полей продукта
     private String generateProductNameForCurrentCategory(Category category){
         return category.getUsableProductName(faker);
     }
