@@ -5,6 +5,6 @@ public class MilkCategory extends Category {
 
     MilkCategory(String name){
 
-        super('Milk');
+        super("Milk");
     }
 }
