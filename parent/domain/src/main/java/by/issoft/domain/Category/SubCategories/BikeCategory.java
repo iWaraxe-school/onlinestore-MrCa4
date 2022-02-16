@@ -4,6 +4,6 @@ import by.issoft.domain.Category.Category;
 public class BikeCategory extends Category {
 
     BikeCategory(String name){ 
-        super(name);
+        super('Book');
     }
 }
