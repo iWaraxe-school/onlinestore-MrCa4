@@ -1,4 +1,4 @@
-package by.issoft.store;
+package by.issoft.store.utils;
 
 import by.issoft.domain.Category.Category;
 import by.issoft.domain.Category.Product;

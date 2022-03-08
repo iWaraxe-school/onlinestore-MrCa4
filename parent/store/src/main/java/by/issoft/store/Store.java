@@ -1,6 +1,7 @@
 package by.issoft.store;
 
 import by.issoft.domain.Category.Category;
+import by.issoft.store.utils.RandomStorePopulator;
 
 import java.util.List;
 
