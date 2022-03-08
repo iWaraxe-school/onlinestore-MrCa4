@@ -6,41 +6,35 @@ import java.util.List;
 
 public class Store {
 
-
-
-
     private List<Category> categoryList;
     private RandomStorePopulator randomStorePopulator = new RandomStorePopulator();
 
-    //Для доступа к объектам категорий
+    /**
+     *Для доступа к объектам категорий
+     */
     public List<Category> getCategoryList() {
         return categoryList;
     }
     public void setCategoryList(List<Category> categoryList) {
         this.categoryList = categoryList;
     }
-
-
     public RandomStorePopulator getRandomStorePopulator() {
         return randomStorePopulator;
     }
 
-
-
-
     public void printAllCategories(){
         System.out.println("============= All categories =============");
-        for(Category category: randomStorePopulator.getAllCategories()){
-            System.out.println("Category --> " + category.getName());
-        }
+        randomStorePopulator.getAllCategories().stream()
+                .map(Category::getName)
+                .map(i-> String.format("Category --> %s", i))
+                .forEach(System.out::println);
     }
 
-    //Заполнение всех категорий магазина продуктами
+    /**
+     * Заполнение всех категорий магазина продуктами
+     */
     public void setAllProducts(){
-        for(Category category:getCategoryList()){
-            category.addProducts(randomStorePopulator.getProductsForCategory(category));
-        }
-
+       getCategoryList().forEach(category->category.addProducts(randomStorePopulator.getProductsForCategory(category)));
     }
 
 

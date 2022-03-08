@@ -4,6 +4,7 @@ import com.github.javafaker.Faker;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 abstract public class Category {
 
@@ -14,45 +15,24 @@ abstract public class Category {
         this.name = name;
     }
 
-    public String getName() {
-        //Для получения имени категории при выводе списка всех категорий
-        return name;
-    }
+    /**
+     * Для получения имени категории при выводе списка всех категорий
+     * @return String
+     */
+    public String getName() { return name; }
 
     public void addProducts(List<Product> products) {
-        if (productList == null) {
-            productList = new ArrayList<>();
-        }
+        final Optional<List<Product>>  opProductList=Optional.empty();
+        productList = opProductList.orElseGet(ArrayList::new);
         productList.addAll(products);
-
     }
 
     public void printAllProduct() {
         System.out.println("Current category --> " + getName());
-        for (Product product : productList) {
-            System.out.println(product.toString());
-        }
+        productList.stream()
+                .map(Product::toString)
+                .forEach(System.out::println);
     }
 
-
-    /*
-        Для генерации произвольных имен продуктов я видел два пути:
-    1.Создание Enum класса где будут перечислены подкатегории и при
-    генерации имен сверять текущую категорию с элементом Enum     и
-    генерировать имя, например:
-            switch(category){
-                    case Bike:
-                        return faker.bike();
-                    case Milk:
-                    ...
-    Тогда, если бы понадобилось добавить еще один подкласс, например,
-    Sport, то пришлось бы вносить изменения в Enum, Populator      и,
-    возможно где то ещё.
-    2. Поручить генерировать имена продуктов самой подкатегории, тогда
-    при добавлении нового подкласа просто необходимо реализовать метод
-    генерации имени.
-
-    Пока что я выбрал 2 вариант. Если скажете - переделаю.
-     */
     public abstract String getUsableProductName(Faker faker);
 }
