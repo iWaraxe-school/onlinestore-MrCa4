@@ -14,12 +14,14 @@ import java.util.HashMap;
 public class XmlProcessingUtil {
     public static HashMap<String,String> xmlConfigMap = new HashMap<>();
 
-    public static HashMap<String ,String> xmlParser() throws ParserConfigurationException, SAXException, IOException {
+    public static HashMap<String ,String> getXmlConfig() throws ParserConfigurationException, SAXException, IOException {
+    //public static HashMap<String ,String> getXmlConfig(String path) throws ParserConfigurationException, SAXException, IOException {
 
         SAXParserFactory factory = SAXParserFactory.newInstance();
         SAXParser parser = factory.newSAXParser();
         XMLHandler handler = new XMLHandler();
         parser.parse(new File("parent/store/src/main/resources/sortConfigFile.xml"), handler);
+       // parser.parse(new File(path), handler);
         //for (Map.Entry entry:xmlConfigMap.entrySet()) System.out.println(entry);
         return xmlConfigMap;
 
@@ -32,6 +34,8 @@ public class XmlProcessingUtil {
         public void startElement(String uri, String localName, String qName, Attributes attributes) {
             currentNodeName = qName;
         }
+
+        //TODO Refactor
         @Override
         public void characters(char[] ch, int start, int length) {
             String data = new String(ch, start, length).replace("\n", "").trim();

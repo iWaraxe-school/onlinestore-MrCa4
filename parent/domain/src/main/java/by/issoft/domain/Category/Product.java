@@ -13,6 +13,18 @@ public class Product {
         this.rate = rate;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public Float getPrice() {
+        return price;
+    }
+
+    public Float getRate() {
+        return rate;
+    }
+
     @Override
     public String toString() {
 

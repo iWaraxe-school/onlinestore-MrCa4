@@ -2,14 +2,14 @@ package by.issoft.domain.Category;
 
 import com.github.javafaker.Faker;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 abstract public class Category {
 
     private  String name;
-    private  List<Product>  productList;
+//    protected   List<Product>  productList;
+    public static Map<String,List<Product>> productsDict = new HashMap<>();
+
 
     public Category (String name){
         this.name = name;
@@ -21,17 +21,12 @@ abstract public class Category {
      */
     public String getName() { return name; }
 
-    public void addProducts(List<Product> products) {
-        final Optional<List<Product>>  opProductList=Optional.empty();
-        productList = opProductList.orElseGet(ArrayList::new);
-        productList.addAll(products);
+    public void addProducts(String categoryName, List<Product> products) {
+        productsDict.put(categoryName,products);
     }
 
-    public void printAllProduct() {
-        System.out.println("Current category --> " + getName());
-        productList.stream()
-                .map(Product::toString)
-                .forEach(System.out::println);
+    public List<Product> getProductList(Category category){
+        return productsDict.get(category);
     }
 
     public abstract String getUsableProductName(Faker faker);
