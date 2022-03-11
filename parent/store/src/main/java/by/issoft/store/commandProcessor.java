@@ -17,7 +17,10 @@ public class commandProcessor {
                 e.printStackTrace();
             } catch (NoSuchMethodException e) {
                 e.printStackTrace();
+            } catch (Exception e){
+                e.printStackTrace();
             }
+
         }
         else{
             System.out.println("No such command!\r\nPlease try again.\r\n");

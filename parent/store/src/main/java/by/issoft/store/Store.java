@@ -21,6 +21,10 @@ public class Store {
 
     private static List<Category> categoryList;
     private RandomStorePopulator randomStorePopulator = new RandomStorePopulator();
+    private static String command = null;
+    private static BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+    protected    HashMap<String, Class<? extends Commands>> commandDict;
+
 
 
     /**
@@ -29,13 +33,14 @@ public class Store {
     public void StoreInitMethod(){
         setCategoryList(getRandomStorePopulator().getAllCategories());
         setAllProducts();
+        setCommandDict();
         storeCycleStart();
     }
     protected static List<Category> getCategoryList() {
         return categoryList;
     }
     private void setCategoryList(List<Category> categoryList) {
-        this.categoryList = categoryList;
+        Store.categoryList = categoryList;
     }
     public RandomStorePopulator getRandomStorePopulator() {
         return randomStorePopulator;
@@ -49,8 +54,7 @@ public class Store {
        getCategoryList()
                .forEach(category->category.addProducts(category.getName(),randomStorePopulator.getProductsForCategory(category)));
   }
-    private  List<Commands> getAllCommands(){
-        //TODO make command "list commands" and "help" call "list commands first"
+    protected List<Commands> getAllCommands(){
         List<Commands> commandList = new ArrayList<>();
         Reflections reflections = new Reflections("by.issoft.store.storeCommands", Scanners.SubTypes);
         Set<Class<? extends Commands>> subTypes =
@@ -71,18 +75,19 @@ public class Store {
 
     }
 
-    private  void storeCycleStart() {
-        System.out.println("Available commands: ");
-        HashMap<String, Class<? extends Commands>> commandDict= getAllCommands()
+    private void setCommandDict(){
+        commandDict= getAllCommands()
                 .stream()
                 .collect(Collectors.toMap(
                         Object::toString,
                         Commands::getClass,
                         (prev, next) -> next,
                         HashMap::new));
-        commandDict.keySet().forEach(System.out::println);
-        String command = null;
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+    }
+
+    private  void storeCycleStart() {
+        System.out.println("Available commands: ");
+        commandDict.keySet().stream().sorted().forEach(System.out::println);
         do {
             System.out.print("Input command --> ");
             try {
@@ -92,8 +97,13 @@ public class Store {
             }
             switch (command) {
                 case "clear":
+                    try {
+                        Runtime.getRuntime().exec("cls");
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                     break;
-                case "exit":
+                case "quit":
                     System.out.println("Goodbye");
                     break;
                 case "help":
@@ -105,11 +115,6 @@ public class Store {
 
         } while (!command.equals("exit"));
     }
-
-
-
-
-
 
 }
 

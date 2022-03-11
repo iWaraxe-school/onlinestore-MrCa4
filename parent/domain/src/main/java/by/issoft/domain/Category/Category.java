@@ -26,7 +26,7 @@ abstract public class Category {
     }
 
     public List<Product> getProductList(Category category){
-        return productsDict.get(category);
+        return productsDict.get(category.getName());
     }
 
     public abstract String getUsableProductName(Faker faker);

@@ -11,11 +11,8 @@ public class ListProducts extends Store implements Commands {
     public void execute() {
 
             getCategoryList()
-                    .stream()
                     .forEach(
-                            category->category.getProductList(category)
-                                    .stream()
-                                    .forEach(System.out::println)
+                            category-> category.getProductList(category).forEach(System.out::println)
                     );
 
 
@@ -23,6 +20,6 @@ public class ListProducts extends Store implements Commands {
 
     @Override
     public String toString() {
-        return "List products";
+        return "List Products";
     }
 }

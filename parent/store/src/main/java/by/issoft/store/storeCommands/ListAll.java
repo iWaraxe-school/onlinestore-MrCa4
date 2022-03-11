@@ -18,6 +18,6 @@ public class ListAll extends Store implements Commands {
 
     @Override
     public String toString() {
-        return "List products";
+        return "List All";
     }
 }

@@ -4,54 +4,55 @@ import by.issoft.domain.Category.Category;
 import by.issoft.domain.Category.Product;
 import by.issoft.store.Commands;
 import by.issoft.store.Store;
+import by.issoft.store.utils.XmlProcessingUtil;
+import org.xml.sax.SAXException;
 
+import javax.xml.parsers.ParserConfigurationException;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.TreeSet;
-
-import static by.issoft.store.utils.XmlProcessingUtil.getXmlConfig;
-
-
-//TODO Refactore, use xml asc,desc
+import java.util.List;
 
 public class Sort extends Store implements Commands {
 
-    public static HashMap<String,String> xmlConfig;
-    private static Comparator<Product> productComparator;
-    private static TreeSet<Product> sortProducts;
+    private  HashMap<String,String> xmlConfig;
+    private  Comparator<Product> productComparator;
+    private static BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+    private  List<Product> sortProducts = new ArrayList<>();
     private String command = null;
 
+    //Constructor
+    public  Sort() throws IOException, SAXException, ParserConfigurationException {
+        //Get xml config parameters
+       xmlConfig =  new XmlProcessingUtil().getXmlConfig();
+       //Init comparator
+       productComparator = comparatorReverser(new NameComparator())
+                .thenComparing(comparatorReverser(new PriceComparator())
+                        .thenComparing(comparatorReverser(new RateComparator())));
 
-    public  Sort() {
-       try {
-           xmlConfig =  getXmlConfig();
-       }catch (Exception e){
-           e.printStackTrace();
-       }
-       productComparator = new NameComparator()
-                .thenComparing(new PriceComparator()
-                        .thenComparing(new RateComparator()));
-       sortProducts = new TreeSet(productComparator);
+    }
 
+    //Set comparator sort to necessary way
+    private  Comparator<Product> comparatorReverser(Comparator<Product> comp){
+        return this.xmlConfig.get(comp.toString()).equals("asc") ? comp : comp.reversed();
     }
 
     @Override
     public void execute() {
-        makeProductSortingList().forEach(p-> System.out.println(
-                "Product name: " + p.getName() +
-                        "Price: "  + p.getPrice() +
-                        "Rate: " + p.getRate()));
+        makeProductSortingList().stream().sorted(productComparator).forEach(System.out::println);
 
     }
-    public TreeSet<Product> makeProductSortingList() {
 
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+    public List<Product> makeProductSortingList() {
+
         System.out.println("Choose category to sort");
+        //Print categories for client
         ListCategories listCategories = new ListCategories();
         listCategories.execute();
+        //Add possibility to sort and print all products
         System.out.println("All");
         System.out.print("Input category --> ");
         try {
@@ -59,11 +60,13 @@ public class Sort extends Store implements Commands {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        //TODO
+        finally {
+            if (command.isEmpty()){
+                return sortProducts;
+            }
+        }
         if (command.equals("All")){
-           getCategoryList()
-                   .stream()
-                   .forEach(i-> sortProducts.addAll(i.getProductList(i)));
+             Category.productsDict.values().forEach(category->sortProducts.addAll(category));
         }
         else {
             sortProducts.addAll(Category.productsDict.get(command));
@@ -79,13 +82,17 @@ public class Sort extends Store implements Commands {
     }
 }
 
-    class RateComparator implements Comparator<Product> {
+//Comparators
+
+
+class RateComparator implements Comparator<Product> {
 
         @Override
-        public int compare(Product e1, Product e2) {
-            return (int) (e1.getRate() - e2.getRate());
-        }
-    }
+        public int compare(Product e1, Product e2) { return (int) (e1.getRate() - e2.getRate()); }
+
+        @Override
+        public String toString() { return "rate"; }
+}
 
 
     class NameComparator implements Comparator<Product> {
@@ -94,11 +101,21 @@ public class Sort extends Store implements Commands {
         public int compare(Product e1, Product e2) {
             return e1.getName().compareTo(e2.getName());
         }
+
+        @Override
+        public String toString() {
+            return "name";
+        }
     }
     class PriceComparator implements Comparator<Product> {
 
         @Override
         public int compare(Product e1, Product e2) {
             return (int) (e1.getPrice() - e2.getPrice());
+        }
+
+        @Override
+        public String toString() {
+            return "price";
         }
     }

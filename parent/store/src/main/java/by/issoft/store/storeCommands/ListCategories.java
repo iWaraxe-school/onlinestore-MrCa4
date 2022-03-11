@@ -13,13 +13,9 @@ public class ListCategories extends Store implements Commands {
                 .forEach(System.out::println);
     }
 
-//    public  List<Category> getCategories(){
-//        return getRandomStorePopulator().getAllCategories();
-//    }
-
     @Override
     public String toString() {
-        return "List categories";
+        return "List Category";
        // return "List categories";
     }
 }
