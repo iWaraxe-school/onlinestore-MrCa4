@@ -11,6 +11,7 @@ import org.xml.sax.SAXException;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Sort extends Store implements Commands {
 
@@ -62,7 +63,10 @@ public class Sort extends Store implements Commands {
         if (inputCategory.equals("All")){
              Category.productsDict.values().forEach(category->sortProducts.addAll(category));
         }
-        if (getCategoryList().contains(inputCategory)) {
+        if (getCategoryList().stream()
+                .map(i->i.getName())
+                .collect(Collectors.toList())
+                .contains(inputCategory)) {
             sortProducts.addAll(Category.productsDict.get(inputCategory));
         }
         else{

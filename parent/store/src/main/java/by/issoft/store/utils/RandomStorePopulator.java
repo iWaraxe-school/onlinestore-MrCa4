@@ -3,11 +3,11 @@ package by.issoft.store.utils;
 import by.issoft.domain.Category.Category;
 import by.issoft.domain.Category.Product;
 import com.github.javafaker.Faker;
-import org.reflections.Reflections;
-import org.reflections.scanners.Scanners;
 
-import java.lang.reflect.InvocationTargetException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -18,41 +18,18 @@ public class RandomStorePopulator {
         return faker;
     }
 
-    /**
-     * Получаем список категорий
-     */
     public List<Category> getAllCategories(){
-        List<Category> categoryList = new ArrayList<>();
-        Reflections reflections = new Reflections("by.issoft.domain.Category", Scanners.SubTypes);
-        Set<Class<? extends Category>> subTypes =
-                reflections.getSubTypesOf(Category.class);
-
-        for (Class<? extends Category> subType: subTypes){
-            try {
-                categoryList.add(subType.getConstructor().newInstance());
-            } catch (InstantiationException
-                    | IllegalAccessException
-                    | InvocationTargetException
-                    | NoSuchMethodException e) {
-                e.printStackTrace();
-            }
-
-        }
+        List<Category> categoryList = (List<Category>)ReflectionGetSubTypes
+                .getAllSubTypes(Category.class,"by.issoft.domain.Category");
         return categoryList;
 
     }
 
-    /**
-     * Получаем готовые продукты
-     */
     //???????? range must start from 1
     public List<Product> getProductsForCategory(Category category){
         return new ArrayList<>(generateProductsForCategory(category, Optional.of(new Random().nextInt(10))));
     }
 
-    /**
-     * Генерация объектов продуктов для категории
-     */
     public List<Product> generateProductsForCategory(Category category, Optional<Integer> countOfProducts){
 
         return IntStream.range(0,countOfProducts.orElse(10))
@@ -61,9 +38,6 @@ public class RandomStorePopulator {
 
     }
 
-    /**
-     * Генерация полей продукта
-     */
     private String generateProductNameForCurrentCategory(Category category){
         return category.getUsableProductName(faker);
     }
