@@ -1,6 +1,6 @@
 package by.issoft.store.storeCommands;
 
-import by.issoft.store.Commands;
+import by.issoft.store.utils.commanUtils.Commands;
 import by.issoft.store.Store;
 
 

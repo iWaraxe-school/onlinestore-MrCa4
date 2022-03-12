@@ -44,13 +44,9 @@ public class RandomStorePopulator {
 
     /**
      * Получаем готовые продукты
-     *
      */
+    //???????? range must start from 1
     public List<Product> getProductsForCategory(Category category){
-        /*return resultList.stream()
-               .map(i->generateProductsForCategory(category, Optional.of(new Random().nextInt(10))))
-               .collect(Collectors.toList()).get(0);
-         */
         return new ArrayList<>(generateProductsForCategory(category, Optional.of(new Random().nextInt(10))));
     }
 

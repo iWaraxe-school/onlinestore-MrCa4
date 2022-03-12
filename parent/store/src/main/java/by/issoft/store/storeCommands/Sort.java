@@ -2,27 +2,22 @@ package by.issoft.store.storeCommands;
 
 import by.issoft.domain.Category.Category;
 import by.issoft.domain.Category.Product;
-import by.issoft.store.Commands;
 import by.issoft.store.Store;
 import by.issoft.store.utils.XmlProcessingUtil;
+import by.issoft.store.utils.commanUtils.CommandProcessor;
+import by.issoft.store.utils.commanUtils.Commands;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 public class Sort extends Store implements Commands {
 
     private  HashMap<String,String> xmlConfig;
     private  Comparator<Product> productComparator;
-    private static BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
     private  List<Product> sortProducts = new ArrayList<>();
-    private String command = null;
+    private String inputCategory = null;
 
     //Constructor
     public  Sort() throws IOException, SAXException, ParserConfigurationException {
@@ -42,7 +37,15 @@ public class Sort extends Store implements Commands {
 
     @Override
     public void execute() {
-        makeProductSortingList().stream().sorted(productComparator).forEach(System.out::println);
+        try {
+            makeProductSortingList()
+                    .stream()
+                    .sorted(productComparator)
+                    .forEach(System.out::println);
+        }
+        catch (Exception e){
+            System.out.println("Sorry we have some problems!\r\nTry again.");
+        }
 
     }
 
@@ -55,21 +58,16 @@ public class Sort extends Store implements Commands {
         //Add possibility to sort and print all products
         System.out.println("All");
         System.out.print("Input category --> ");
-        try {
-            command = bufferedReader.readLine();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        finally {
-            if (command.isEmpty()){
-                return sortProducts;
-            }
-        }
-        if (command.equals("All")){
+        inputCategory = CommandProcessor.getCommand();
+        if (inputCategory.equals("All")){
              Category.productsDict.values().forEach(category->sortProducts.addAll(category));
         }
-        else {
-            sortProducts.addAll(Category.productsDict.get(command));
+        if (getCategoryList().contains(inputCategory)) {
+            sortProducts.addAll(Category.productsDict.get(inputCategory));
+        }
+        else{
+            System.out.println("Unknown category!\r\nPlease try again.");
+            return null;
         }
         return sortProducts;
 
