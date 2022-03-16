@@ -7,7 +7,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class CommandList extends Store {
+public class CommandList  {
+
+
 
     private static List<Commands> findCommands(){
         List<Commands> commandList = (List<Commands>) ReflectionGetSubTypes
@@ -16,7 +18,7 @@ public class CommandList extends Store {
     }
 
     public static void getCommandList(){
-        commandDict = findCommands()
+        Store.commandDict = findCommands()
                 .stream()
                 .collect(Collectors.toMap(
                         Object::toString,
@@ -27,7 +29,7 @@ public class CommandList extends Store {
 
     public static void printCommandList(){
 
-        commandDict.keySet()
+        Store.commandDict.keySet()
                         .stream()
                         .sorted()
                         .forEach(System.out::println);

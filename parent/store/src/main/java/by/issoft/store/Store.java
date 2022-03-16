@@ -13,19 +13,32 @@ import java.util.List;
 //TODO Refactore and make separate class fo reflection
 public class Store {
 
+
+    private static Store store = null;
     private static List<Category> categoryList;
     private RandomStorePopulator randomStorePopulator = new RandomStorePopulator();
     private static String command = null;
     public static HashMap<String, Class<? extends Commands>> commandDict;
 
     //Init shop
+    private Store(){
+
+    }
+
+
+    public static Store getStore(){
+        if(store==null){
+            store = new Store();
+        }
+        return store;
+    }
     public void StoreInitMethod(){
         setCategoryList(getRandomStorePopulator().getAllCategories());
         setAllProducts();
         CommandList.getCommandList();
         storeCycleStart();
     }
-    protected static List<Category> getCategoryList() {
+    public static List<Category> getCategoryList() {
         return categoryList;
     }
     private void setCategoryList(List<Category> scannedCategoryList) {

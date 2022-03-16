@@ -10,7 +10,7 @@ public class StoreApp {
 
 
         //Start our shop
-        Store store = new Store();
+        Store store = Store.getStore();
         store.StoreInitMethod();
 
     }

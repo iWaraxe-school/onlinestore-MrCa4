@@ -2,7 +2,6 @@ package by.issoft.store.storeCommands;
 
 import by.issoft.domain.Category.Category;
 import by.issoft.domain.Category.Product;
-import by.issoft.store.Store;
 import by.issoft.store.utils.XmlProcessingUtil;
 import by.issoft.store.utils.commanUtils.CommandProcessor;
 import by.issoft.store.utils.commanUtils.Commands;
@@ -10,10 +9,15 @@ import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
 import java.util.stream.Collectors;
 
-public class Sort extends Store implements Commands {
+import static by.issoft.store.Store.getCategoryList;
+
+public class Sort implements Commands {
 
     private  HashMap<String,String> xmlConfig;
     private  Comparator<Product> productComparator;

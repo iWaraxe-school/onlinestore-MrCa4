@@ -1,9 +1,12 @@
 package by.issoft.store.storeCommands;
 
 import by.issoft.store.utils.commanUtils.Commands;
-import by.issoft.store.Store;
 
-public class ListCategories extends Store implements Commands {
+import static by.issoft.store.Store.getCategoryList;
+
+;
+
+public class ListCategories implements Commands {
 
     @Override
     public  void execute() {

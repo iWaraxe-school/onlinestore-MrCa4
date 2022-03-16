@@ -1,10 +1,11 @@
 package by.issoft.store.storeCommands;
 
 import by.issoft.store.utils.commanUtils.Commands;
-import by.issoft.store.Store;
+
+import static by.issoft.store.Store.getCategoryList;
 
 
-public class ListProducts extends Store implements Commands {
+public class ListProducts implements Commands {
 
 
     @Override
