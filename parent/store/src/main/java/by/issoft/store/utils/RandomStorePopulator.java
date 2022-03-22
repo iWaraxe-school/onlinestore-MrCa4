@@ -11,6 +11,8 @@ import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import static by.issoft.store.utils.ReflectionGetSubTypes.getAllSubTypes;
+
 public class RandomStorePopulator {
 
     private static Faker faker = new Faker();
@@ -18,11 +20,10 @@ public class RandomStorePopulator {
         return faker;
     }
 
-    public List<Category> getAllCategories(){
-        List<Category> categoryList = (List<Category>)ReflectionGetSubTypes
-                .getAllSubTypes(Category.class,"by.issoft.domain.Category");
-        return categoryList;
 
+
+    public List<Category> getAllCategories(){
+        return (List<Category>)getAllSubTypes(Category.class,"by.issoft.domain.Category");
     }
 
     //???????? range must start from 1

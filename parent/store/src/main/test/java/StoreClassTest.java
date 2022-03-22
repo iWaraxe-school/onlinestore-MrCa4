@@ -21,7 +21,7 @@ public class StoreClassTest {
     }
 
     @Test
-    public void getStoreInstanceTest() throws Exception {
+    public void testGetStoreInstance() throws Exception {
         Assert.assertEquals(Store.getStore(), store);
           }
 

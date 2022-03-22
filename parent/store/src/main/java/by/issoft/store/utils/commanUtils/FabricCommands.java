@@ -9,6 +9,9 @@ import java.util.stream.Collectors;
 abstract public class FabricCommands {
     public  HashMap<String, Class<? extends Commands>> commandDict;
 
+    public  FabricCommands(){
+        getCommandList();
+    }
 
     public  void exec(String command){
 
@@ -32,6 +35,7 @@ abstract public class FabricCommands {
     }
     abstract public List<Commands> findCommands();
 
+    //TODO move method....anywhere
     public  void printCommandList(){
 
         this.commandDict.keySet()

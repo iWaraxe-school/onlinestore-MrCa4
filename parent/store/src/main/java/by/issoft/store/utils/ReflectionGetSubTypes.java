@@ -12,30 +12,39 @@ import java.util.Set;
 
 public class ReflectionGetSubTypes {
 
-    public static  <T> List<? extends T> getAllSubTypes(Class<T> cls, String path){
+    public static  <T> List<? extends T>getAllSubTypes(Class<T> cls, String path){
+        Reflections reflections;
         List<T> subTypesList = new ArrayList<>();
-        Reflections reflections = new Reflections(path, Scanners.SubTypes);
-        Set<Class<? extends T>> subTypes =
-                reflections.getSubTypesOf(cls);
-        for (Class<? extends T> subType: subTypes){
-            try {
-                subTypesList.add(subType.getConstructor().newInstance());
-            } catch (InstantiationException
-                    | IllegalAccessException
-                    | InvocationTargetException
-                    | NoSuchMethodException e) {
-                e.printStackTrace();
-            }
+        try {
+            reflections = new Reflections(path, Scanners.SubTypes);
+            Set<Class<? extends T>> subTypes =
+                    reflections.getSubTypesOf(cls);
+            for (Class<? extends T> subType: subTypes){
+                try {
+                    subTypesList.add(subType.getConstructor().newInstance());
+                } catch (InstantiationException
+                        | IllegalAccessException
+                        | InvocationTargetException
+                        | NoSuchMethodException e) {
+                    e.printStackTrace();
+                }
 
+            }
         }
+        catch (Exception ex){
+           // ex.printStackTrace();
+            System.out.println("Bad path Catched");
+            System.out.println(path);
+        }
+
         return subTypesList;
 
     }
 
-    public static   List<Commands> findCommands(String pack){
-        List<Commands> commandList = (List<Commands>) ReflectionGetSubTypes
-                .getAllSubTypes(Commands.class,pack);
-        return commandList;
+    //TODO  delete this - redundant (must call getAllSubTypes and cast result)
+    public static   List<Commands> findCommands(String path){
+        return (List<Commands>)getAllSubTypes(Commands.class, path);
+
     }
 
     public static Commands getCommandObject(String command, HashMap<String, Class<? extends Commands>> commandDict){

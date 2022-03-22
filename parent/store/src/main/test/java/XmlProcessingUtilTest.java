@@ -20,18 +20,19 @@ public class XmlProcessingUtilTest {
     }
 
     @Test
-    public void getXmlProcessingUtilReturnTypeTest() throws Exception {
+    public void testGetXmlProcessingUtilReturnType() throws Exception {
         Assert.assertEquals(xmlProcessingUtil.getXmlConfig().getClass(), HashMap.class);
     }
 
     @Test
-    public void getXmlProcessingKeysTest() throws Exception {
+    public void testGetXmlProcessingKeys() throws Exception {
+
        xmlProcessingUtil.getXmlConfig().keySet()
                .forEach(i->Assert.assertEquals(i.getClass(),String.class));
     }
 
     @Test
-    public void getXmlProcessingValuesTest() throws Exception {
+    public void testGetXmlProcessingValues() throws Exception {
 
         xmlProcessingUtil.getXmlConfig().values()
                 .forEach(i->Assert.assertTrue(i.equals("desc")  || i.equals("asc")));

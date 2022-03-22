@@ -10,8 +10,8 @@ public class UserCommandList extends FabricCommands {
 
     public UserCommandList(){
         super();
-        getCommandList();
     }
+
     @Override
     public   List<Commands> findCommands(){
         return ReflectionGetSubTypes.findCommands("by.issoft.store.storeCommands");
