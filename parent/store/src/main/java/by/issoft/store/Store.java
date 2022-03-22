@@ -18,14 +18,11 @@ public class Store {
     private static List<Category> categoryList;
     private RandomStorePopulator randomStorePopulator = new RandomStorePopulator();
     private static String command = null;
-    private FabricCommands fabricCommands;
- //   public static HashMap<String, Class<? extends Commands>> commandDict;
+    public static FabricCommands fabricCommands;
 
     //Init shop
     private Store(){
-
     }
-
 
     public static Store getStore(){
         if(store==null){
@@ -35,21 +32,18 @@ public class Store {
     }
 
     public void StoreInitMethod(){
-
         setCategoryList(randomStorePopulator.getAllCategories());
         setAllProducts();
-      //  CommandList.getCommandList();
         storeCycleStart();
     }
+
     public static List<Category> getCategoryList() {
         return categoryList;
     }
     private void setCategoryList(List<Category> scannedCategoryList) {
         categoryList = scannedCategoryList;
     }
-//    private RandomStorePopulator getRandomStorePopulator() {
-//        return randomStorePopulator;
-//    }
+
     private void setAllProducts(){
        getCategoryList()
                .forEach(category->category.addProducts(category.getName(),
@@ -60,7 +54,7 @@ public class Store {
 
     private  void storeCycleStart() {
         System.out.println("Available commands: ");
-        fabricCommands= new UserCommandList();
+        fabricCommands = new UserCommandList();
         fabricCommands.printCommandList();
         do {
             System.out.print("Input command --> ");
@@ -75,7 +69,7 @@ public class Store {
                 case "secret":
                     fabricCommands = new AdminCommandList();
                     fabricCommands.printCommandList();
-                    System.out.println("Input Admin command -->");
+                    System.out.print("Input Admin command -->");
                     fabricCommands.exec(StreamUtil.getInputData());
                     break;
                 default:

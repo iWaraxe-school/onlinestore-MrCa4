@@ -18,7 +18,7 @@ public class XmlProcessingUtil {
         SAXParserFactory factory = SAXParserFactory.newInstance();
         SAXParser parser = factory.newSAXParser();
         XMLHandler handler = new XMLHandler();
-        parser.parse(new File("parent/store/src/main/resources/sortConfigFile.xml"), handler);
+        parser.parse(new File("src/main/resources/sortConfigFile.xml"), handler);
         return xmlConfigMap;
 
     }

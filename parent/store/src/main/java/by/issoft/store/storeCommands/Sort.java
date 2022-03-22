@@ -2,8 +2,8 @@ package by.issoft.store.storeCommands;
 
 import by.issoft.domain.Category.Category;
 import by.issoft.domain.Category.Product;
+import by.issoft.store.utils.StreamUtil;
 import by.issoft.store.utils.XmlProcessingUtil;
-import by.issoft.store.utils.commanUtils.FabricCommands;
 import by.issoft.store.utils.commanUtils.Commands;
 import org.xml.sax.SAXException;
 
@@ -63,7 +63,7 @@ public class Sort implements Commands {
         //Add possibility to sort and print all products
         System.out.println("All");
         System.out.print("Input category --> ");
-        inputCategory = FabricCommands.getCommand();
+        inputCategory = StreamUtil.getInputData();
         if (inputCategory.equals("All")){
              Category.productsDict.values().forEach(category->sortProducts.addAll(category));
         }

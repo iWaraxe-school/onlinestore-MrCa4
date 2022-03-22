@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 abstract public class FabricCommands {
     public  HashMap<String, Class<? extends Commands>> commandDict;
 
+
     public  void exec(String command){
 
         Commands commandObj = this.getCommandObj(command, commandDict);
@@ -30,8 +31,6 @@ abstract public class FabricCommands {
         return ReflectionGetSubTypes.getCommandObject(command,commandDict);
     }
     abstract public List<Commands> findCommands();
-
-
 
     public  void printCommandList(){
 
