@@ -7,7 +7,6 @@ import java.util.*;
 abstract public class Category {
 
     private  String name;
-//    protected   List<Product>  productList;
     public static Map<String,List<Product>> productsDict = new HashMap<>();
 
 

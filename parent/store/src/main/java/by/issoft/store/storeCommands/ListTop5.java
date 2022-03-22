@@ -1,9 +1,8 @@
 package by.issoft.store.storeCommands;
 
-import by.issoft.store.Store;
 import by.issoft.store.utils.commanUtils.Commands;
 
-public class ListTop5 extends Store implements Commands {
+public class ListTop5 implements Commands {
     @Override
     public void execute() {
         try {

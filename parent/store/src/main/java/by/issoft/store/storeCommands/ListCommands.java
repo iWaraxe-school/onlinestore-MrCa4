@@ -1,14 +1,13 @@
 package by.issoft.store.storeCommands;
 
-import by.issoft.store.utils.commanUtils.CommandList;
+import by.issoft.store.utils.commanUtils.UserCommandList;
 import by.issoft.store.utils.commanUtils.Commands;
-import by.issoft.store.Store;
 
-public class ListCommands extends Store implements Commands {
+public class ListCommands implements Commands {
 
     @Override
     public void execute() {
-        CommandList.printCommandList();
+        UserCommandList.printCommandList();
     }
 
     @Override
