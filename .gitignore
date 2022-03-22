@@ -1,4 +1,6 @@
 # Default ignored files
 /.idea
-*/target
 *.iml
+/parent/domain/target/
+/parent/store/target/
+/parent/consoleApp/target/
