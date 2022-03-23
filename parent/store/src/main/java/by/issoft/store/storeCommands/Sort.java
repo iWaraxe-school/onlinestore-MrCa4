@@ -25,10 +25,19 @@ public class Sort implements Commands {
     private String inputCategory = null;
 
     //Constructor
-    public  Sort() throws IOException, SAXException, ParserConfigurationException {
+    public  Sort()  {
         //Get xml config parameters
-       xmlConfig =  new XmlProcessingUtil().getXmlConfig();
-       //Init comparator
+
+        try {
+            xmlConfig =  new XmlProcessingUtil().getXmlConfig();
+        } catch (ParserConfigurationException e) {
+            e.printStackTrace();
+        } catch (SAXException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        //Init comparator
        productComparator = comparatorReverser(new NameComparator())
                 .thenComparing(comparatorReverser(new PriceComparator())
                         .thenComparing(comparatorReverser(new RateComparator())));
@@ -54,7 +63,7 @@ public class Sort implements Commands {
 
     }
 
-    public List<Product> makeProductSortingList() {
+    protected List<Product> makeProductSortingList() {
 
         System.out.println("Choose category to sort");
         //Print categories for client

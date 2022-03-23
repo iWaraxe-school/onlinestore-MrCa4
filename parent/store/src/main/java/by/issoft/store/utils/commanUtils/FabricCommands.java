@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 abstract public class FabricCommands {
-    public  HashMap<String, Class<? extends Commands>> commandDict;
+    protected   HashMap<String, Class<? extends Commands>> commandDict;
 
     public  FabricCommands(){
         getCommandList();
@@ -29,7 +29,7 @@ abstract public class FabricCommands {
                         HashMap::new));
     }
 
-    public Commands getCommandObj(String command,
+    private Commands getCommandObj(String command,
                                            HashMap<String, Class<? extends Commands>> commandDict){
         return ReflectionGetSubTypes.getCommandObject(command,commandDict);
     }

@@ -2,7 +2,7 @@ package by.issoft.store.storeCommands;
 
 import by.issoft.store.utils.commanUtils.Commands;
 
-public class ListTop5 implements Commands {
+public class ListTop5 extends Sort implements Commands {
     @Override
     public void execute() {
         try {

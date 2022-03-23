@@ -32,7 +32,7 @@ public class RandomStorePopulator {
     }
 
     public List<Product> generateProductsForCategory(Category category, Optional<Integer> countOfProducts){
-
+        countOfProducts = (countOfProducts == null)? Optional.ofNullable(Integer.valueOf(0)) : countOfProducts;
         return IntStream.range(0,countOfProducts.orElse(10))
                 .mapToObj(i->new Product(generateProductNameForCurrentCategory(category),generatePrice(),generateRate()))
                 .collect(Collectors.toList());
