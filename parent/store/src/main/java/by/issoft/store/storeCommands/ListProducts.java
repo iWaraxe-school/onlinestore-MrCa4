@@ -1,11 +1,11 @@
 package by.issoft.store.storeCommands;
 
-import by.issoft.store.utils.commanUtils.Commands;
+import by.issoft.store.utils.commanUtils.CommandsInterface;
 
 import static by.issoft.store.Store.getCategoryList;
 
 
-public class ListProducts implements Commands {
+public class ListProducts implements CommandsInterface {
 
 
     @Override
@@ -16,6 +16,11 @@ public class ListProducts implements Commands {
                             category-> category.getProductList(category).forEach(System.out::println)
                     );
 
+
+    }
+
+    @Override
+    public void execute(Object object) {
 
     }
 

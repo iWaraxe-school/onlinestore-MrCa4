@@ -1,12 +1,14 @@
 package by.issoft.store;
 
 import by.issoft.domain.Category.Category;
+import by.issoft.store.utils.CollectorOfCompletedOrdersUtil;
 import by.issoft.store.utils.RandomStorePopulator;
 import by.issoft.store.utils.StreamUtil;
 import by.issoft.store.utils.commanUtils.AdminCommandList;
 import by.issoft.store.utils.commanUtils.FabricCommands;
-import by.issoft.store.utils.commanUtils.UserCommandList;
+import by.issoft.store.utils.commanUtils.StoreCommandList;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -19,27 +21,29 @@ public class Store {
     private RandomStorePopulator randomStorePopulator = new RandomStorePopulator();
     private static String command = null;
     public static FabricCommands fabricCommands;
+    public static List<Order> completedOrders = new ArrayList<>();
 
     //Init shop
     private Store(){
     }
 
     public static Store getStore(){
-        if(store==null){
-            store = new Store();
-        }
-        return store;
+        return store = (store == null) ? new Store():store;
     }
 
+    //TODO chain of r.....
     public void StoreInitMethod(){
         setCategoryList(randomStorePopulator.getAllCategories());
         setAllProducts();
+        new Thread(CollectorOfCompletedOrdersUtil.getCollectorOfCompletedOrdersUtil()).start();
         storeCycleStart();
+
     }
 
     public static List<Category> getCategoryList() {
         return categoryList;
     }
+
     private void setCategoryList(List<Category> scannedCategoryList) {
         categoryList = scannedCategoryList;
     }
@@ -54,9 +58,10 @@ public class Store {
 
     private  void storeCycleStart() {
         System.out.println("Available commands: ");
-        fabricCommands = new UserCommandList();
+        fabricCommands = new StoreCommandList();
         fabricCommands.printCommandList();
         do {
+
             System.out.print("Input command --> ");
             command = StreamUtil.getInputData();
             switch (command) {
@@ -67,10 +72,12 @@ public class Store {
                     System.out.println("With all questions you should contact Mr.Cat");
                     break;
                 case "secret":
-                    fabricCommands = new AdminCommandList();
-                    fabricCommands.printCommandList();
+                   //TODO it is dangerouse to use one link to 2 objects because i call store fabric command from another class
+
+                    FabricCommands admfabricCommands = new AdminCommandList();
+                    admfabricCommands.printCommandList();
                     System.out.print("Input Admin command -->");
-                    fabricCommands.exec(StreamUtil.getInputData());
+                    admfabricCommands.exec(StreamUtil.getInputData());
                     break;
                 default:
                     fabricCommands.exec(command);

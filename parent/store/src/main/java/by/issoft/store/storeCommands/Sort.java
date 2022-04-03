@@ -4,7 +4,7 @@ import by.issoft.domain.Category.Category;
 import by.issoft.domain.Category.Product;
 import by.issoft.store.utils.StreamUtil;
 import by.issoft.store.utils.XmlProcessingUtil;
-import by.issoft.store.utils.commanUtils.Commands;
+import by.issoft.store.utils.commanUtils.CommandsInterface;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 
 import static by.issoft.store.Store.getCategoryList;
 
-public class Sort implements Commands {
+public class Sort implements CommandsInterface {
 
     private  HashMap<String,String> xmlConfig;
     private  Comparator<Product> productComparator;
@@ -60,6 +60,11 @@ public class Sort implements Commands {
         catch (Exception e){
             System.out.println("Sorry we have some problems!\r\nTry again.");
         }
+
+    }
+
+    @Override
+    public void execute(Object object) {
 
     }
 

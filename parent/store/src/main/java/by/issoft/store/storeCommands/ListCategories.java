@@ -1,12 +1,12 @@
 package by.issoft.store.storeCommands;
 
-import by.issoft.store.utils.commanUtils.Commands;
+import by.issoft.store.utils.commanUtils.CommandsInterface;
 
 import static by.issoft.store.Store.getCategoryList;
 
 ;
 
-public class ListCategories implements Commands {
+public class ListCategories implements CommandsInterface {
 
     @Override
     public  void execute() {
@@ -14,6 +14,11 @@ public class ListCategories implements Commands {
         getCategoryList().stream()
                 .map(category-> String.format("Category --> %s", category.getName()))
                 .forEach(System.out::println);
+    }
+
+    @Override
+    public void execute(Object object) {
+
     }
 
     @Override

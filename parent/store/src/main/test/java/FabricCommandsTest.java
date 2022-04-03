@@ -1,5 +1,5 @@
 import by.issoft.store.utils.ReflectionGetSubTypes;
-import by.issoft.store.utils.commanUtils.Commands;
+import by.issoft.store.utils.commanUtils.CommandsInterface;
 import by.issoft.store.utils.commanUtils.FabricCommands;
 import org.junit.*;
 
@@ -9,7 +9,7 @@ public class FabricCommandsTest {
 
     private FabricCommands fabricCommands = new FabricCommands(){
         @Override
-        public   List<Commands> findCommands(){
+        public   List<CommandsInterface> findCommands(){
             return ReflectionGetSubTypes.findCommands("by.issoft.store.storeCommands");
         }
     };

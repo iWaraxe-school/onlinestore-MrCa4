@@ -1,6 +1,6 @@
 package by.issoft.store.utils;
 
-import by.issoft.store.utils.commanUtils.Commands;
+import by.issoft.store.utils.commanUtils.CommandsInterface;
 import org.reflections.Reflections;
 import org.reflections.scanners.Scanners;
 
@@ -42,12 +42,12 @@ public class ReflectionGetSubTypes {
     }
 
     //TODO  delete this - redundant (must call getAllSubTypes and cast result)
-    public static   List<Commands> findCommands(String path){
-        return (List<Commands>)getAllSubTypes(Commands.class, path);
+    public static   List<CommandsInterface> findCommands(String path){
+        return (List<CommandsInterface>)getAllSubTypes(CommandsInterface.class, path);
 
     }
 
-    public static Commands getCommandObject(String command, HashMap<String, Class<? extends Commands>> commandDict){
+    public static CommandsInterface getCommandObject(String command, HashMap<String, Class<? extends CommandsInterface>> commandDict){
         if (commandDict.containsKey(command)){
             try {
                 return commandDict.get(command).getConstructor().newInstance();
