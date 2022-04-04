@@ -7,7 +7,6 @@ import java.util.List;
 
 public class StoreCommandList extends FabricCommands {
 
-
     public StoreCommandList(){
         super();
     }
@@ -16,8 +15,5 @@ public class StoreCommandList extends FabricCommands {
     public   List<CommandsInterface> findCommands(){
         return ReflectionGetSubTypes.findCommands("by.issoft.store.storeCommands");
     }
-
-
-
 
 }

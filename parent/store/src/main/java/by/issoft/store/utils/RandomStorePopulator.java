@@ -20,13 +20,10 @@ public class RandomStorePopulator {
         return faker;
     }
 
-
-
     public List<Category> getAllCategories(){
         return (List<Category>)getAllSubTypes(Category.class,"by.issoft.domain.Category");
     }
 
-    //???????? range must start from 1
     public List<Product> getProductsForCategory(Category category){
         return new ArrayList<>(generateProductsForCategory(category, Optional.of(new Random().nextInt(10))));
     }

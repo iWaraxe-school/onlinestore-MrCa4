@@ -13,9 +13,9 @@ public class ListProducts implements CommandsInterface {
 
             getCategoryList()
                     .forEach(
-                            category-> category.getProductList(category).forEach(System.out::println)
+                            category-> category.getProductList(category)
+                                    .forEach(System.out::println)
                     );
-
 
     }
 

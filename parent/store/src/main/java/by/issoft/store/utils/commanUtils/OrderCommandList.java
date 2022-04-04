@@ -15,9 +15,5 @@ public class OrderCommandList extends FabricCommands{
         return ReflectionGetSubTypes.findCommands("by.issoft.store.orderCommands");
     }
 
-
-
-
-
 }
 

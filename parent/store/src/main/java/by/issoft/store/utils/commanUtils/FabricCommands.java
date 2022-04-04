@@ -15,7 +15,6 @@ abstract public class FabricCommands {
     }
 
     public  void exec(String command){
-
        try {
            CommandsInterface commandObj = this.getCommandObj(command, commandDict);
            commandObj.execute();
@@ -46,14 +45,12 @@ abstract public class FabricCommands {
     }
     abstract public List<CommandsInterface> findCommands();
 
-    //TODO move method....anywhere
     public  void printCommandList(){
 
         this.commandDict.keySet()
                 .stream()
                 .sorted()
                 .forEach(System.out::println);
-        //TODO print with stream api
         System.out.println("quit\r\nhelp\r\n");
 
     }

@@ -4,7 +4,7 @@ import by.issoft.store.Store;
 
 public class CollectorOfCompletedOrdersUtil implements Runnable {
 
-    private static CollectorOfCompletedOrdersUtil orderCollector=null;
+    private static CollectorOfCompletedOrdersUtil orderCollector = null;
     private CollectorOfCompletedOrdersUtil(){
 
     }
@@ -13,15 +13,12 @@ public class CollectorOfCompletedOrdersUtil implements Runnable {
         return orderCollector = (orderCollector == null) ? new CollectorOfCompletedOrdersUtil():orderCollector;
     }
 
-
-
     @Override
     public void run() {
 
         while (true) {
             synchronized (Store.completedOrders) {
                 Store.completedOrders.clear();
-
             }
             System.out.println("Clear completed order list");
             try {

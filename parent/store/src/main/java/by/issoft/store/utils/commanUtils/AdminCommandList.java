@@ -9,7 +9,6 @@ public class AdminCommandList extends FabricCommands {
 
     public  AdminCommandList(){
         super();
-        //getCommandList();
     }
     @Override
     public List<CommandsInterface> findCommands(){

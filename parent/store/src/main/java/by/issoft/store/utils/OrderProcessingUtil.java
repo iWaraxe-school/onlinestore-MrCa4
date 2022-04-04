@@ -11,14 +11,14 @@ public class OrderProcessingUtil implements Runnable {
         this.storeFabricCommands = fabricCommands;
     }
 
+
+    // if we want interactive cart process...
     @Override
     public void run() {
         String command;
         Order order = new Order();
         order.setShopperName("Trololo");
         storeFabricCommands.exec("List Products");
-
-// if we want interactive cart process...
         FabricCommands fabricCommands = new OrderCommandList();
         fabricCommands.printCommandList();
         do{

@@ -13,12 +13,11 @@ import java.util.Set;
 public class ReflectionGetSubTypes {
 
     public static  <T> List<? extends T>getAllSubTypes(Class<T> cls, String path){
-        Reflections reflections;
         List<T> subTypesList = new ArrayList<>();
         try {
-            reflections = new Reflections(path, Scanners.SubTypes);
             Set<Class<? extends T>> subTypes =
-                    reflections.getSubTypesOf(cls);
+                    new Reflections(path, Scanners.SubTypes)
+                            .getSubTypesOf(cls);
             for (Class<? extends T> subType: subTypes){
                 try {
                     subTypesList.add(subType.getConstructor().newInstance());
@@ -28,20 +27,14 @@ public class ReflectionGetSubTypes {
                         | NoSuchMethodException e) {
                     e.printStackTrace();
                 }
-
             }
         }
         catch (Exception ex){
-           // ex.printStackTrace();
-            System.out.println("Bad path Catched");
-            System.out.println(path);
+            System.out.println("Bad path Catched: " +path);
         }
-
         return subTypesList;
-
     }
 
-    //TODO  delete this - redundant (must call getAllSubTypes and cast result)
     public static   List<CommandsInterface> findCommands(String path){
         return (List<CommandsInterface>)getAllSubTypes(CommandsInterface.class, path);
 

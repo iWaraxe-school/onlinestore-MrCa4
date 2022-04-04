@@ -25,18 +25,15 @@ public class Sort implements CommandsInterface {
     private String inputCategory = null;
 
     //Constructor
+
     public  Sort()  {
         //Get xml config parameters
-
         try {
             xmlConfig =  new XmlProcessingUtil().getXmlConfig();
-        } catch (ParserConfigurationException e) {
-            e.printStackTrace();
-        } catch (SAXException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (ParserConfigurationException | SAXException | IOException e) {
             e.printStackTrace();
         }
+
         //Init comparator
        productComparator = comparatorReverser(new NameComparator())
                 .thenComparing(comparatorReverser(new PriceComparator())
@@ -85,6 +82,7 @@ public class Sort implements CommandsInterface {
                 .map(i->i.getName())
                 .collect(Collectors.toList())
                 .contains(inputCategory)) {
+
             sortProducts.addAll(Category.productsDict.get(inputCategory));
         }
         else{

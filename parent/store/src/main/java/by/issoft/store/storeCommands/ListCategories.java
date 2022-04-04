@@ -24,6 +24,5 @@ public class ListCategories implements CommandsInterface {
     @Override
     public String toString() {
         return "List Category";
-       // return "List categories";
     }
 }

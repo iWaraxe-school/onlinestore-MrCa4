@@ -20,7 +20,8 @@ public class Store {
     private static List<Category> categoryList;
     private RandomStorePopulator randomStorePopulator = new RandomStorePopulator();
     private static String command = null;
-    public static FabricCommands fabricCommands;
+    public static FabricCommands storeFabricCommands = new StoreCommandList();
+    public static FabricCommands admFabricCommands = new AdminCommandList();
     public static List<Order> completedOrders = new ArrayList<>();
 
     //Init shop
@@ -31,7 +32,6 @@ public class Store {
         return store = (store == null) ? new Store():store;
     }
 
-    //TODO chain of r.....
     public void StoreInitMethod(){
         setCategoryList(randomStorePopulator.getAllCategories());
         setAllProducts();
@@ -50,7 +50,8 @@ public class Store {
 
     private void setAllProducts(){
        getCategoryList()
-               .forEach(category->category.addProducts(category.getName(),
+               .forEach(category->category
+                       .addProducts(category.getName(),
                                                         randomStorePopulator.
                                                                 getProductsForCategory(category)));
     }
@@ -58,10 +59,8 @@ public class Store {
 
     private  void storeCycleStart() {
         System.out.println("Available commands: ");
-        fabricCommands = new StoreCommandList();
-        fabricCommands.printCommandList();
+        storeFabricCommands.printCommandList();
         do {
-
             System.out.print("Input command --> ");
             command = StreamUtil.getInputData();
             switch (command) {
@@ -72,15 +71,12 @@ public class Store {
                     System.out.println("With all questions you should contact Mr.Cat");
                     break;
                 case "secret":
-                   //TODO it is dangerouse to use one link to 2 objects because i call store fabric command from another class
-
-                    FabricCommands admfabricCommands = new AdminCommandList();
-                    admfabricCommands.printCommandList();
+                    admFabricCommands.printCommandList();
                     System.out.print("Input Admin command -->");
-                    admfabricCommands.exec(StreamUtil.getInputData());
+                    admFabricCommands.exec(StreamUtil.getInputData());
                     break;
                 default:
-                    fabricCommands.exec(command);
+                    storeFabricCommands.exec(command);
                     break;
             }
 

@@ -7,7 +7,7 @@ public class ListCommands implements CommandsInterface {
 
     @Override
     public void execute() {
-        Store.fabricCommands.printCommandList();
+        Store.storeFabricCommands.printCommandList();
     }
 
     @Override

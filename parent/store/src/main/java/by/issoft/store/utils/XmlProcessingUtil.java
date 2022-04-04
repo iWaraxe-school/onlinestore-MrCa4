@@ -33,7 +33,10 @@ public class XmlProcessingUtil {
 
         @Override
         public void characters(char[] ch, int start, int length) {
-            String data = new String(ch, start, length).replace("\n", "").trim();
+            String data = new String(ch, start, length)
+                    .replace("\n", "")
+                    .trim();
+
             if (!data.isEmpty()) {
                     xmlConfigMap.put(currentNodeName, data);
             }
