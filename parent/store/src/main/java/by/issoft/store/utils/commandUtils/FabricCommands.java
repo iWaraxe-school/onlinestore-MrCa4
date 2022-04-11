@@ -1,4 +1,4 @@
-package by.issoft.store.utils.commanUtils;
+package by.issoft.store.utils.commandUtils;
 
 import by.issoft.store.Order;
 import by.issoft.store.utils.ReflectionGetSubTypes;

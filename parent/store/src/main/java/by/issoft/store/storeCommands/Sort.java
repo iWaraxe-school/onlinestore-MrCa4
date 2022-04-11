@@ -4,7 +4,7 @@ import by.issoft.domain.Category.Category;
 import by.issoft.domain.Category.Product;
 import by.issoft.store.utils.StreamUtil;
 import by.issoft.store.utils.XmlProcessingUtil;
-import by.issoft.store.utils.commanUtils.CommandsInterface;
+import by.issoft.store.utils.commandUtils.CommandsInterface;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;

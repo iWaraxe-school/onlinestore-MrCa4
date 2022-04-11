@@ -1,6 +1,6 @@
 package by.issoft.store.utils;
 
-import by.issoft.store.utils.commanUtils.CommandsInterface;
+import by.issoft.store.utils.commandUtils.CommandsInterface;
 import org.reflections.Reflections;
 import org.reflections.scanners.Scanners;
 

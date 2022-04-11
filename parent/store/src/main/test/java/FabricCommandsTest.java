@@ -1,6 +1,6 @@
 import by.issoft.store.utils.ReflectionGetSubTypes;
-import by.issoft.store.utils.commanUtils.CommandsInterface;
-import by.issoft.store.utils.commanUtils.FabricCommands;
+import by.issoft.store.utils.commandUtils.CommandsInterface;
+import by.issoft.store.utils.commandUtils.FabricCommands;
 import org.junit.*;
 
 import java.util.List;

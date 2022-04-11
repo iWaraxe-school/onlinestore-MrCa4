@@ -1,4 +1,4 @@
-package by.issoft.store.utils.commanUtils;
+package by.issoft.store.utils.commandUtils;
 
 public interface CommandsInterface {
       void execute();

@@ -4,9 +4,9 @@ import by.issoft.domain.Category.Category;
 import by.issoft.store.utils.CollectorOfCompletedOrdersUtil;
 import by.issoft.store.utils.RandomStorePopulator;
 import by.issoft.store.utils.StreamUtil;
-import by.issoft.store.utils.commanUtils.AdminCommandList;
-import by.issoft.store.utils.commanUtils.FabricCommands;
-import by.issoft.store.utils.commanUtils.StoreCommandList;
+import by.issoft.store.utils.commandUtils.AdminCommandList;
+import by.issoft.store.utils.commandUtils.FabricCommands;
+import by.issoft.store.utils.commandUtils.StoreCommandList;
 
 import java.util.ArrayList;
 import java.util.List;

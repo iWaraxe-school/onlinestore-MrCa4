@@ -1,6 +1,6 @@
 package by.issoft.store.storeCommands;
 
-import by.issoft.store.utils.commanUtils.CommandsInterface;
+import by.issoft.store.utils.commandUtils.CommandsInterface;
 
 import static by.issoft.store.Store.getCategoryList;
 

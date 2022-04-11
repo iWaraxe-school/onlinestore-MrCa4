@@ -1,7 +1,7 @@
 package by.issoft.store.storeCommands;
 
 import by.issoft.store.Store;
-import by.issoft.store.utils.commanUtils.CommandsInterface;
+import by.issoft.store.utils.commandUtils.CommandsInterface;
 
 public class ListCommands implements CommandsInterface {
 

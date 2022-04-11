@@ -1,8 +1,8 @@
 package by.issoft.store.utils;
 
 import by.issoft.store.Order;
-import by.issoft.store.utils.commanUtils.FabricCommands;
-import by.issoft.store.utils.commanUtils.OrderCommandList;
+import by.issoft.store.utils.commandUtils.FabricCommands;
+import by.issoft.store.utils.commandUtils.OrderCommandList;
 
 public class OrderProcessingUtil implements Runnable {
 

@@ -2,15 +2,14 @@ package by.issoft.store.storeCommands;
 
 import by.issoft.store.Order;
 import by.issoft.store.Store;
-import by.issoft.store.utils.commanUtils.CommandsInterface;
-import by.issoft.store.utils.commanUtils.FabricCommands;
-import by.issoft.store.utils.commanUtils.OrderCommandList;
+import by.issoft.store.utils.RandomStorePopulator;
+import by.issoft.store.utils.commandUtils.CommandsInterface;
+import by.issoft.store.utils.commandUtils.FabricCommands;
+import by.issoft.store.utils.commandUtils.OrderCommandList;
 
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-
-import static by.issoft.store.utils.RandomStorePopulator.faker;
 
 public class CreateOrder implements CommandsInterface {
 
@@ -39,7 +38,7 @@ public class CreateOrder implements CommandsInterface {
                     FabricCommands orderCommands = new OrderCommandList();
                     orderCommands.exec("Add", order);
                     try {
-                        Thread.sleep(faker.number().numberBetween(1_000,3_000));
+                        Thread.sleep(RandomStorePopulator.getFaker().number().numberBetween(1_000,3_000));
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
