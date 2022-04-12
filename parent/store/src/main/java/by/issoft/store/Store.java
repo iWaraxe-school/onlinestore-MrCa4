@@ -1,12 +1,14 @@
 package by.issoft.store;
 
 import by.issoft.domain.Category.Category;
+import by.issoft.store.utils.CollectorOfCompletedOrdersUtil;
 import by.issoft.store.utils.RandomStorePopulator;
 import by.issoft.store.utils.StreamUtil;
 import by.issoft.store.utils.commanUtils.AdminCommandList;
 import by.issoft.store.utils.commanUtils.FabricCommands;
-import by.issoft.store.utils.commanUtils.UserCommandList;
+import by.issoft.store.utils.commanUtils.StoreCommandList;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -18,41 +20,38 @@ public class Store {
     private static List<Category> categoryList;
     private RandomStorePopulator randomStorePopulator = new RandomStorePopulator();
     private static String command = null;
-    private FabricCommands fabricCommands;
- //   public static HashMap<String, Class<? extends Commands>> commandDict;
+    public static FabricCommands storeFabricCommands = new StoreCommandList();
+    public static FabricCommands admFabricCommands = new AdminCommandList();
+    public static List<Order> completedOrders = new ArrayList<>();
 
     //Init shop
     private Store(){
-
     }
 
-
     public static Store getStore(){
-        if(store==null){
-            store = new Store();
-        }
-        return store;
+        return store = (store == null) ? new Store():store;
     }
 
     public void StoreInitMethod(){
-
         setCategoryList(randomStorePopulator.getAllCategories());
         setAllProducts();
-      //  CommandList.getCommandList();
+        new Thread(CollectorOfCompletedOrdersUtil.getCollectorOfCompletedOrdersUtil()).start();
         storeCycleStart();
+
     }
+
     public static List<Category> getCategoryList() {
         return categoryList;
     }
+
     private void setCategoryList(List<Category> scannedCategoryList) {
         categoryList = scannedCategoryList;
     }
-//    private RandomStorePopulator getRandomStorePopulator() {
-//        return randomStorePopulator;
-//    }
+
     private void setAllProducts(){
        getCategoryList()
-               .forEach(category->category.addProducts(category.getName(),
+               .forEach(category->category
+                       .addProducts(category.getName(),
                                                         randomStorePopulator.
                                                                 getProductsForCategory(category)));
     }
@@ -60,8 +59,7 @@ public class Store {
 
     private  void storeCycleStart() {
         System.out.println("Available commands: ");
-        fabricCommands= new UserCommandList();
-        fabricCommands.printCommandList();
+        storeFabricCommands.printCommandList();
         do {
             System.out.print("Input command --> ");
             command = StreamUtil.getInputData();
@@ -73,13 +71,12 @@ public class Store {
                     System.out.println("With all questions you should contact Mr.Cat");
                     break;
                 case "secret":
-                    fabricCommands = new AdminCommandList();
-                    fabricCommands.printCommandList();
-                    System.out.println("Input Admin command -->");
-                    fabricCommands.exec(StreamUtil.getInputData());
+                    admFabricCommands.printCommandList();
+                    System.out.print("Input Admin command -->");
+                    admFabricCommands.exec(StreamUtil.getInputData());
                     break;
                 default:
-                    fabricCommands.exec(command);
+                    storeFabricCommands.exec(command);
                     break;
             }
 

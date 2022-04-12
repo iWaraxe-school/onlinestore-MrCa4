@@ -2,9 +2,9 @@ package by.issoft.store.storeCommands;
 
 import by.issoft.domain.Category.Category;
 import by.issoft.domain.Category.Product;
+import by.issoft.store.utils.StreamUtil;
 import by.issoft.store.utils.XmlProcessingUtil;
-import by.issoft.store.utils.commanUtils.FabricCommands;
-import by.issoft.store.utils.commanUtils.Commands;
+import by.issoft.store.utils.commanUtils.CommandsInterface;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 
 import static by.issoft.store.Store.getCategoryList;
 
-public class Sort implements Commands {
+public class Sort implements CommandsInterface {
 
     private  HashMap<String,String> xmlConfig;
     private  Comparator<Product> productComparator;
@@ -25,10 +25,16 @@ public class Sort implements Commands {
     private String inputCategory = null;
 
     //Constructor
-    public  Sort() throws IOException, SAXException, ParserConfigurationException {
+
+    public  Sort()  {
         //Get xml config parameters
-       xmlConfig =  new XmlProcessingUtil().getXmlConfig();
-       //Init comparator
+        try {
+            xmlConfig =  new XmlProcessingUtil().getXmlConfig();
+        } catch (ParserConfigurationException | SAXException | IOException e) {
+            e.printStackTrace();
+        }
+
+        //Init comparator
        productComparator = comparatorReverser(new NameComparator())
                 .thenComparing(comparatorReverser(new PriceComparator())
                         .thenComparing(comparatorReverser(new RateComparator())));
@@ -54,7 +60,12 @@ public class Sort implements Commands {
 
     }
 
-    public List<Product> makeProductSortingList() {
+    @Override
+    public void execute(Object object) {
+
+    }
+
+    protected List<Product> makeProductSortingList() {
 
         System.out.println("Choose category to sort");
         //Print categories for client
@@ -63,7 +74,7 @@ public class Sort implements Commands {
         //Add possibility to sort and print all products
         System.out.println("All");
         System.out.print("Input category --> ");
-        inputCategory = FabricCommands.getCommand();
+        inputCategory = StreamUtil.getInputData();
         if (inputCategory.equals("All")){
              Category.productsDict.values().forEach(category->sortProducts.addAll(category));
         }
@@ -71,6 +82,7 @@ public class Sort implements Commands {
                 .map(i->i.getName())
                 .collect(Collectors.toList())
                 .contains(inputCategory)) {
+
             sortProducts.addAll(Category.productsDict.get(inputCategory));
         }
         else{

@@ -4,14 +4,16 @@ import by.issoft.store.utils.ReflectionGetSubTypes;
 
 import java.util.List;
 
-public class AdminCommandList extends FabricCommands {
+public class OrderCommandList extends FabricCommands{
 
-
-    public  AdminCommandList(){
+    public OrderCommandList(){
         super();
     }
+
     @Override
     public List<CommandsInterface> findCommands(){
-        return ReflectionGetSubTypes.findCommands("by.issoft.store.adminCommands");
+        return ReflectionGetSubTypes.findCommands("by.issoft.store.orderCommands");
     }
+
 }
+

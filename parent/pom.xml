@@ -18,6 +18,7 @@
         <module>consoleApp</module>
     </modules>
     <dependencies>
+        
         <dependency>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-compiler-plugin</artifactId>

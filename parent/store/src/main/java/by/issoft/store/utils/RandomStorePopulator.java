@@ -11,27 +11,25 @@ import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import static by.issoft.store.utils.ReflectionGetSubTypes.getAllSubTypes;
+
 public class RandomStorePopulator {
 
-    private static Faker faker = new Faker();
+    public static Faker faker = new Faker();
     public static Faker getFaker() {
         return faker;
     }
 
     public List<Category> getAllCategories(){
-        List<Category> categoryList = (List<Category>)ReflectionGetSubTypes
-                .getAllSubTypes(Category.class,"by.issoft.domain.Category");
-        return categoryList;
-
+        return (List<Category>)getAllSubTypes(Category.class,"by.issoft.domain.Category");
     }
 
-    //???????? range must start from 1
     public List<Product> getProductsForCategory(Category category){
         return new ArrayList<>(generateProductsForCategory(category, Optional.of(new Random().nextInt(10))));
     }
 
     public List<Product> generateProductsForCategory(Category category, Optional<Integer> countOfProducts){
-
+        countOfProducts = (countOfProducts == null)? Optional.ofNullable(Integer.valueOf(0)) : countOfProducts;
         return IntStream.range(0,countOfProducts.orElse(10))
                 .mapToObj(i->new Product(generateProductNameForCurrentCategory(category),generatePrice(),generateRate()))
                 .collect(Collectors.toList());

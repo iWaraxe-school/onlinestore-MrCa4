@@ -1,6 +1,6 @@
 package by.issoft.store.utils;
 
-import by.issoft.store.utils.commanUtils.Commands;
+import by.issoft.store.utils.commanUtils.CommandsInterface;
 import org.reflections.Reflections;
 import org.reflections.scanners.Scanners;
 
@@ -12,33 +12,35 @@ import java.util.Set;
 
 public class ReflectionGetSubTypes {
 
-    public static  <T> List<? extends T> getAllSubTypes(Class<T> cls, String path){
+    public static  <T> List<? extends T>getAllSubTypes(Class<T> cls, String path){
         List<T> subTypesList = new ArrayList<>();
-        Reflections reflections = new Reflections(path, Scanners.SubTypes);
-        Set<Class<? extends T>> subTypes =
-                reflections.getSubTypesOf(cls);
-        for (Class<? extends T> subType: subTypes){
-            try {
-                subTypesList.add(subType.getConstructor().newInstance());
-            } catch (InstantiationException
-                    | IllegalAccessException
-                    | InvocationTargetException
-                    | NoSuchMethodException e) {
-                e.printStackTrace();
+        try {
+            Set<Class<? extends T>> subTypes =
+                    new Reflections(path, Scanners.SubTypes)
+                            .getSubTypesOf(cls);
+            for (Class<? extends T> subType: subTypes){
+                try {
+                    subTypesList.add(subType.getConstructor().newInstance());
+                } catch (InstantiationException
+                        | IllegalAccessException
+                        | InvocationTargetException
+                        | NoSuchMethodException e) {
+                    e.printStackTrace();
+                }
             }
-
+        }
+        catch (Exception ex){
+            System.out.println("Bad path Catched: " +path);
         }
         return subTypesList;
+    }
+
+    public static   List<CommandsInterface> findCommands(String path){
+        return (List<CommandsInterface>)getAllSubTypes(CommandsInterface.class, path);
 
     }
 
-    public static   List<Commands> findCommands(String pack){
-        List<Commands> commandList = (List<Commands>) ReflectionGetSubTypes
-                .getAllSubTypes(Commands.class,pack);
-        return commandList;
-    }
-
-    public static Commands getCommandObject(String command, HashMap<String, Class<? extends Commands>> commandDict){
+    public static CommandsInterface getCommandObject(String command, HashMap<String, Class<? extends CommandsInterface>> commandDict){
         if (commandDict.containsKey(command)){
             try {
                 return commandDict.get(command).getConstructor().newInstance();

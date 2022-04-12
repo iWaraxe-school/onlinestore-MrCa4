@@ -1,5 +1,6 @@
 package by.issoft.store.utils.commanUtils;
 
+import by.issoft.store.Order;
 import by.issoft.store.utils.ReflectionGetSubTypes;
 
 import java.util.HashMap;
@@ -7,12 +8,25 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 abstract public class FabricCommands {
-    public  HashMap<String, Class<? extends Commands>> commandDict;
+    protected   HashMap<String, Class<? extends CommandsInterface>> commandDict;
+
+    public  FabricCommands(){
+        getCommandList();
+    }
 
     public  void exec(String command){
+       try {
+           CommandsInterface commandObj = this.getCommandObj(command, commandDict);
+           commandObj.execute();
+       }catch (Exception e){
+           System.out.println("Command error try again");
+       }
+    }
 
-        Commands commandObj = this.getCommandObj(command, commandDict);
-        commandObj.execute();
+    public  void exec(String command, Order order){
+
+        CommandsInterface commandObj = this.getCommandObj(command, commandDict);
+        commandObj.execute(order);
     }
 
     protected void getCommandList(){
@@ -20,18 +34,16 @@ abstract public class FabricCommands {
                 .stream()
                 .collect(Collectors.toMap(
                         Object::toString,
-                        Commands::getClass,
+                        CommandsInterface::getClass,
                         (prev, next) -> next,
                         HashMap::new));
     }
 
-    public Commands getCommandObj(String command,
-                                           HashMap<String, Class<? extends Commands>> commandDict){
+    private CommandsInterface getCommandObj(String command,
+                                            HashMap<String, Class<? extends CommandsInterface>> commandDict){
         return ReflectionGetSubTypes.getCommandObject(command,commandDict);
     }
-    abstract public List<Commands> findCommands();
-
-
+    abstract public List<CommandsInterface> findCommands();
 
     public  void printCommandList(){
 
@@ -39,7 +51,6 @@ abstract public class FabricCommands {
                 .stream()
                 .sorted()
                 .forEach(System.out::println);
-        //TODO print with stream api
         System.out.println("quit\r\nhelp\r\n");
 
     }

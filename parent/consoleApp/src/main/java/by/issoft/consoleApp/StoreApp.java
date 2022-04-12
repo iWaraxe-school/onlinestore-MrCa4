@@ -7,8 +7,6 @@ public class StoreApp {
 
     public static void main(String[] args) {
 
-
-
         //Start our shop
         Store store = Store.getStore();
         store.StoreInitMethod();

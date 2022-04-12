@@ -5,19 +5,15 @@ import by.issoft.store.utils.ReflectionGetSubTypes;
 import java.util.List;
 
 
-public class UserCommandList extends FabricCommands {
+public class StoreCommandList extends FabricCommands {
 
-
-    public UserCommandList(){
+    public StoreCommandList(){
         super();
-        getCommandList();
     }
+
     @Override
-    public   List<Commands> findCommands(){
+    public   List<CommandsInterface> findCommands(){
         return ReflectionGetSubTypes.findCommands("by.issoft.store.storeCommands");
     }
-
-
-
 
 }

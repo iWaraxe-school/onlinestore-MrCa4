@@ -1,8 +1,8 @@
 package by.issoft.store.storeCommands;
 
-import by.issoft.store.utils.commanUtils.Commands;
+import by.issoft.store.utils.commanUtils.CommandsInterface;
 
-public class ListTop5 implements Commands {
+public class ListTop5 extends Sort implements CommandsInterface {
     @Override
     public void execute() {
         try {
@@ -17,6 +17,11 @@ public class ListTop5 implements Commands {
         } catch (Exception e) {
            // e.printStackTrace();
         }
+    }
+
+    @Override
+    public void execute(Object object) {
+
     }
 
     @Override
