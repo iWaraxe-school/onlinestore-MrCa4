@@ -13,6 +13,6 @@ public class PhoneCategory extends Category {
 
     @Override
     public  String getUsableProductName(Faker faker) {
-        return "Nopia, Model: " + faker.number().digits(2);
+        return "Nopia/Model: " + faker.number().digits(2);
     }
 }

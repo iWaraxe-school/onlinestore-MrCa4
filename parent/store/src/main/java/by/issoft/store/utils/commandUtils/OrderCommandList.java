@@ -12,7 +12,7 @@ public class OrderCommandList extends FabricCommands{
 
     @Override
     public List<CommandsInterface> findCommands(){
-        return ReflectionGetSubTypes.findCommands("by.issoft.store.orderCommands");
+        return ReflectionGetSubTypes.findCommands("by.issoft.store.commands.orderCommands");
     }
 
 }

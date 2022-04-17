@@ -1,4 +1,4 @@
-package by.issoft.store.storeCommands;
+package by.issoft.store.commands.storeCommands.inMemoryStorage;
 
 import by.issoft.store.Order;
 import by.issoft.store.Store;

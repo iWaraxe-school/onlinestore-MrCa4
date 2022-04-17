@@ -1,10 +1,9 @@
-package by.issoft.store.storeCommands;
+package by.issoft.store.commands.storeCommands.inMemoryStorage;
 
 import by.issoft.store.utils.commandUtils.CommandsInterface;
 
 import static by.issoft.store.Store.getCategoryList;
 
-;
 
 public class ListCategories implements CommandsInterface {
 

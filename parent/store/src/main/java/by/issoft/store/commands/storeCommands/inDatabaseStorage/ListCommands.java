@@ -1,4 +1,4 @@
-package by.issoft.store.storeCommands;
+package by.issoft.store.commands.storeCommands.inDatabaseStorage;
 
 import by.issoft.store.Store;
 import by.issoft.store.utils.commandUtils.CommandsInterface;

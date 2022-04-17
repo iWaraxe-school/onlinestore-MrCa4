@@ -1,4 +1,4 @@
-package by.issoft.store.utils;
+package by.issoft.store.utils.orderUtils;
 
 import by.issoft.store.Store;
 

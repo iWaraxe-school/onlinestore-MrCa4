@@ -2,7 +2,7 @@ package by.issoft.store;
 
 import by.issoft.domain.Category.Product;
 import by.issoft.store.utils.commandUtils.FabricCommands;
-import by.issoft.store.utils.commandUtils.StoreCommandList;
+import by.issoft.store.utils.commandUtils.StoreInMemoryCommandList;
 import org.apache.commons.lang3.RandomStringUtils;
 
 import java.util.ArrayList;
@@ -16,13 +16,12 @@ public class Order {
 
     private String orderNumber;
     private String shopperName;
-    public FabricCommands storeCommands = new StoreCommandList();
-    public static List<Product> productList = new ArrayList<Product>();
+    public FabricCommands storeCommands = new StoreInMemoryCommandList();
+    public static List<Product> productList = new ArrayList<>();
     public Map<Product,Integer> cart = new HashMap<>();
 
     private static void getProducts(){
-            getCategoryList().forEach(cat->cat.getProductList(cat)
-                    .forEach(i->productList.add(i)));
+            getCategoryList().forEach(cat-> productList.addAll(cat.getProductList(cat)));
     }
 
     public  Order(){
