@@ -11,8 +11,8 @@ public class ListTop5 extends Sort implements CommandsInterface {
                     .limit(5)
                     .forEach(p-> System.out.println(
                 "Product name: " + p.getName() +
-                        "Price: "  + p.getPrice() +
-                        "Rate: " + p.getRate()));
+                        " Price: "  + p.getPrice() +
+                        " Rate: " + p.getRate()));
     }
 
     @Override
