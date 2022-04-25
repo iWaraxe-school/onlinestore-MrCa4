@@ -1,12 +1,14 @@
 package by.issoft.store;
 
 import by.issoft.domain.Category.Category;
-import by.issoft.store.utils.CollectorOfCompletedOrdersUtil;
+import by.issoft.store.utils.RandomStoreDBPopulator;
 import by.issoft.store.utils.RandomStorePopulator;
 import by.issoft.store.utils.StreamUtil;
-import by.issoft.store.utils.commanUtils.AdminCommandList;
-import by.issoft.store.utils.commanUtils.FabricCommands;
-import by.issoft.store.utils.commanUtils.StoreCommandList;
+import by.issoft.store.utils.commandUtils.AdminCommandList;
+import by.issoft.store.utils.commandUtils.FabricCommands;
+import by.issoft.store.utils.commandUtils.StoreInDatabaseCommandList;
+import by.issoft.store.utils.commandUtils.StoreInMemoryCommandList;
+import by.issoft.store.utils.orderUtils.CollectorOfCompletedOrdersUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,8 +21,9 @@ public class Store {
     private static Store store = null;
     private static List<Category> categoryList;
     private RandomStorePopulator randomStorePopulator = new RandomStorePopulator();
+    private RandomStoreDBPopulator randomStoreDBPopulator = new RandomStoreDBPopulator();
     private static String command = null;
-    public static FabricCommands storeFabricCommands = new StoreCommandList();
+    public static FabricCommands storeFabricCommands;
     public static FabricCommands admFabricCommands = new AdminCommandList();
     public static List<Order> completedOrders = new ArrayList<>();
 
@@ -32,22 +35,35 @@ public class Store {
         return store = (store == null) ? new Store():store;
     }
 
-    public void StoreInitMethod(){
-        setCategoryList(randomStorePopulator.getAllCategories());
-        setAllProducts();
+    public void StoreInitMethod(String storageType){
+        if (storageType.equals("reflection")) {
+            storeFabricCommands = new StoreInMemoryCommandList();
+             setCategoryList(randomStorePopulator.getAllCategories());
+             setAllProducts();
+        }
+        if (storageType.equals("database")){
+        storeFabricCommands = new StoreInDatabaseCommandList();
+        randomStoreDBPopulator.process();
+        }
+        else{
+            System.out.println("Invalid store Type");
+            System.exit(1);
+        }
         new Thread(CollectorOfCompletedOrdersUtil.getCollectorOfCompletedOrdersUtil()).start();
         storeCycleStart();
-
     }
 
     public static List<Category> getCategoryList() {
         return categoryList;
     }
 
+    @Deprecated
     private void setCategoryList(List<Category> scannedCategoryList) {
         categoryList = scannedCategoryList;
     }
 
+
+    @Deprecated
     private void setAllProducts(){
        getCategoryList()
                .forEach(category->category

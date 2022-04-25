@@ -15,7 +15,7 @@ import static by.issoft.store.utils.ReflectionGetSubTypes.getAllSubTypes;
 
 public class RandomStorePopulator {
 
-    public static Faker faker = new Faker();
+    private static Faker faker = new Faker();
     public static Faker getFaker() {
         return faker;
     }

@@ -1,10 +1,10 @@
-package by.issoft.store.storeCommands;
+package by.issoft.store.commands.storeCommands.inMemoryStorage;
 
 import by.issoft.domain.Category.Category;
 import by.issoft.domain.Category.Product;
 import by.issoft.store.utils.StreamUtil;
 import by.issoft.store.utils.XmlProcessingUtil;
-import by.issoft.store.utils.commanUtils.CommandsInterface;
+import by.issoft.store.utils.commandUtils.CommandsInterface;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -19,30 +19,30 @@ import static by.issoft.store.Store.getCategoryList;
 
 public class Sort implements CommandsInterface {
 
-    private  HashMap<String,String> xmlConfig;
-    private  Comparator<Product> productComparator;
-    private  List<Product> sortProducts = new ArrayList<>();
+    private HashMap<String, String> xmlConfig;
+    private Comparator<Product> productComparator;
+    private List<Product> sortProducts = new ArrayList<>();
     private String inputCategory = null;
 
     //Constructor
 
-    public  Sort()  {
+    public Sort() {
         //Get xml config parameters
         try {
-            xmlConfig =  new XmlProcessingUtil().getXmlConfig();
+            xmlConfig = new XmlProcessingUtil().getXmlConfig();
         } catch (ParserConfigurationException | SAXException | IOException e) {
             e.printStackTrace();
         }
 
         //Init comparator
-       productComparator = comparatorReverser(new NameComparator())
+        productComparator = comparatorReverser(new NameComparator())
                 .thenComparing(comparatorReverser(new PriceComparator())
                         .thenComparing(comparatorReverser(new RateComparator())));
 
     }
 
     //Set comparator sort to necessary way
-    private  Comparator<Product> comparatorReverser(Comparator<Product> comp){
+    private Comparator<Product> comparatorReverser(Comparator<Product> comp) {
         return this.xmlConfig.get(comp.toString()).equals("asc") ? comp : comp.reversed();
     }
 
@@ -53,8 +53,7 @@ public class Sort implements CommandsInterface {
                     .stream()
                     .sorted(productComparator)
                     .forEach(System.out::println);
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             System.out.println("Sorry we have some problems!\r\nTry again.");
         }
 
@@ -75,17 +74,16 @@ public class Sort implements CommandsInterface {
         System.out.println("All");
         System.out.print("Input category --> ");
         inputCategory = StreamUtil.getInputData();
-        if (inputCategory.equals("All")){
-             Category.productsDict.values().forEach(category->sortProducts.addAll(category));
+        if (inputCategory.equals("All")) {
+            Category.productsDict.values().forEach(category -> sortProducts.addAll(category));
         }
         if (getCategoryList().stream()
-                .map(i->i.getName())
+                .map(Category::getName)
                 .collect(Collectors.toList())
                 .contains(inputCategory)) {
 
             sortProducts.addAll(Category.productsDict.get(inputCategory));
-        }
-        else{
+        } else {
             System.out.println("Unknown category!\r\nPlease try again.");
             return null;
         }
@@ -98,22 +96,26 @@ public class Sort implements CommandsInterface {
     public String toString() {
         return "Sort";
     }
-}
 
+}
 //Comparators
 
 
-class RateComparator implements Comparator<Product> {
+     class RateComparator implements Comparator<Product> {
 
         @Override
-        public int compare(Product e1, Product e2) { return (int) (e1.getRate() - e2.getRate()); }
+        public int compare(Product e1, Product e2) {
+            return (int) (e1.getRate() - e2.getRate());
+        }
 
         @Override
-        public String toString() { return "rate"; }
-}
+        public String toString() {
+            return "rate";
+        }
+    }
 
 
-    class NameComparator implements Comparator<Product> {
+     class NameComparator implements Comparator<Product> {
 
         @Override
         public int compare(Product e1, Product e2) {
@@ -125,7 +127,8 @@ class RateComparator implements Comparator<Product> {
             return "name";
         }
     }
-    class PriceComparator implements Comparator<Product> {
+
+     class PriceComparator implements Comparator<Product> {
 
         @Override
         public int compare(Product e1, Product e2) {

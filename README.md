@@ -15,6 +15,7 @@ Please replace `Reflection` and in memory products storage with database.
 
 You should store categories and products for each category in database tables.
 
+
 Requirements:
 
 1. use `JDBC`

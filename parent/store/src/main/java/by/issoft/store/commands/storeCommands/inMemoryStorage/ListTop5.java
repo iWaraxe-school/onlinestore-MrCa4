@@ -1,6 +1,6 @@
-package by.issoft.store.storeCommands;
+package by.issoft.store.commands.storeCommands.inMemoryStorage;
 
-import by.issoft.store.utils.commanUtils.CommandsInterface;
+import by.issoft.store.utils.commandUtils.CommandsInterface;
 
 public class ListTop5 extends Sort implements CommandsInterface {
     @Override

@@ -1,6 +1,6 @@
 import by.issoft.store.utils.ReflectionGetSubTypes;
-import by.issoft.store.utils.commanUtils.CommandsInterface;
-import by.issoft.store.utils.commanUtils.FabricCommands;
+import by.issoft.store.utils.commandUtils.CommandsInterface;
+import by.issoft.store.utils.commandUtils.FabricCommands;
 import org.junit.*;
 
 import java.util.List;
@@ -10,7 +10,7 @@ public class FabricCommandsTest {
     private FabricCommands fabricCommands = new FabricCommands(){
         @Override
         public   List<CommandsInterface> findCommands(){
-            return ReflectionGetSubTypes.findCommands("by.issoft.store.storeCommands");
+            return ReflectionGetSubTypes.findCommands("by.issoft.store.commands.storeCommands");
         }
     };
 
@@ -31,7 +31,7 @@ public class FabricCommandsTest {
     }
 
     @Test
-    public void testGetStoreInstance() throws Exception {
+    public void testGetStoreInstance(){
         Assert.assertEquals(List.class,fabricCommands.findCommands().getClass());
         //fabricCommands.printCommandList();
     }
