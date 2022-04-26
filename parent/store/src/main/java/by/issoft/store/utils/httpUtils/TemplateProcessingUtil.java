@@ -1,15 +1,21 @@
 package by.issoft.store.utils.httpUtils;
 
 import lombok.SneakyThrows;
+import org.apache.commons.io.FileUtils;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.util.List;
 
 public class TemplateProcessingUtil {
 
+    public static byte[] getStatic(String templateFile){
+        return staticReader(templateFile);
+    }
     @SneakyThrows
     public static String getTemplate(String templateFile){
+
         return templateReader(templateFile);
     }
     @SneakyThrows
@@ -25,9 +31,14 @@ public class TemplateProcessingUtil {
             , String injectTag){
 //        Document html = Jsoup.parse(template);
         String renderString = modelData.stream()
-                .map(element -> String.format(renderPattern,element))
+                .map(element -> (!element.contains("[")) ? String.format(renderPattern,element):element+"<br>")
                 .reduce("", String::concat);
         return template.replace(injectTag,renderString);
+    }
+
+    @SneakyThrows
+    private  static byte[] staticReader(String templateFile){
+        return FileUtils.readFileToByteArray(new File("parent/store/src/main/resources/"+templateFile));
     }
 
     @SneakyThrows

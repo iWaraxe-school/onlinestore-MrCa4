@@ -2,7 +2,7 @@ package by.issoft.store.commands.storeCommands.inMemoryStorage;
 
 import by.issoft.store.Order;
 import by.issoft.store.Store;
-import by.issoft.store.utils.RandomStorePopulator;
+import by.issoft.store.utils.populators.RandomStorePopulator;
 import by.issoft.store.utils.commandUtils.CommandsInterface;
 import by.issoft.store.utils.commandUtils.FabricCommands;
 import by.issoft.store.utils.commandUtils.OrderCommandList;

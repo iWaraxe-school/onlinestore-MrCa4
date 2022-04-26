@@ -1,4 +1,4 @@
-package by.issoft.store.utils;
+package by.issoft.store.utils.populators;
 
 import by.issoft.domain.Category.Category;
 import by.issoft.domain.Category.Product;

@@ -1,9 +1,9 @@
 package by.issoft.store;
 
 import by.issoft.domain.Category.Category;
-import by.issoft.store.services.HTTPService;
-import by.issoft.store.utils.RandomStoreDBPopulator;
-import by.issoft.store.utils.RandomStorePopulator;
+import by.issoft.store.services.httpService.HTTPService;
+import by.issoft.store.utils.populators.RandomStoreDBPopulator;
+import by.issoft.store.utils.populators.RandomStorePopulator;
 import by.issoft.store.utils.StreamUtil;
 import by.issoft.store.utils.commandUtils.AdminCommandList;
 import by.issoft.store.utils.commandUtils.FabricCommands;
