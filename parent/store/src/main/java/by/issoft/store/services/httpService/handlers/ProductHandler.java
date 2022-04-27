@@ -14,11 +14,24 @@ import static by.issoft.store.services.httpService.HTTPService.getHttpStoreFabri
 public class ProductHandler implements HttpHandler{
 
 
+    private void commandSwitch(HttpExchange t){
+
+        if (t.getRequestURI().getPath().toLowerCase().contains("top5")){
+            System.out.println("Top5");
+            getHttpStoreFabricCommands().exec("Top5");
+        }
+        if (t.getRequestURI().getPath().toLowerCase().contains("products")){
+            getHttpStoreFabricCommands().exec("List All");
+        }
+
+    }
+
+
     @Override
     public void handle(HttpExchange t) throws IOException {
             String response;
             if (t.getRequestMethod().toLowerCase().equals("get")){
-                getHttpStoreFabricCommands().exec("List All");
+                commandSwitch(t);
                 response = TemplateProcessingUtil.getTemplate(
                         "templates/products.html"
                         //TODO - defferent render collections..generics?????

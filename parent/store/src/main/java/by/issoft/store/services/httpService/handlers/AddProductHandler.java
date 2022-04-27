@@ -19,12 +19,14 @@ public class AddProductHandler implements HttpHandler {
             if (t.getRequestMethod().toLowerCase().equals("post")){
                 HTTPService.getHttpStoreFabricCommands().exec("List Category");
                 t.getRequestBody();
-                t.getRequestHeaders().get("Referer");
+                System.out.println(t.getRequestHeaders().get("Referer"));
+
                 response = TemplateProcessingUtil.getTemplate(
                         "templates/categories.html"
                         ,getCategoryListCashe()
                         , HTMLPatternEnum.H3_WHITE_TEXT_WITH_BRTAG.getPattern()
                         ,"<!--<test>-->");
+                t.setAttribute("Location","");
                 t.sendResponseHeaders(302, response.length());
             }
             else{

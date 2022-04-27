@@ -57,7 +57,7 @@ public class HTTPService {
             server.createContext("/index", new IndexHandler());
             server.createContext("/categories", new CategoryHandler());
             server.createContext("/products", new ProductHandler());
-
+            server.createContext("/top5", new ProductHandler());
             server.createContext("/templates/", new TemplateHandler());
             server.createContext("/static/", new StaticHandler());
             server.setExecutor(null); // creates a default executor
@@ -65,7 +65,7 @@ public class HTTPService {
 
 
             server.createContext("/sort", new IndexHandler());
-            server.createContext("/top5/", new IndexHandler());
+            //server.createContext("/top5/", new ProductHandler());
             server.createContext("/order/addproduct", new AddProductHandler());
 
         }

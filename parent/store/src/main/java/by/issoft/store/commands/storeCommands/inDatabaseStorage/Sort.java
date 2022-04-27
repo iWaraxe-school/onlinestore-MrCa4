@@ -7,12 +7,11 @@ import by.issoft.store.utils.commandUtils.CommandsInterface;
 import by.issoft.store.utils.dbUtils.DBClientUtil;
 import by.issoft.store.utils.dbUtils.TemplateQueryEnum;
 import lombok.SneakyThrows;
-import org.xml.sax.SAXException;
 
-import javax.xml.parsers.ParserConfigurationException;
-import java.io.IOException;
 import java.sql.ResultSet;
 import java.util.*;
+
+import static by.issoft.store.utils.StackTraceUtil.checkStackTrace;
 
 public class Sort implements CommandsInterface {
 
@@ -22,15 +21,10 @@ public class Sort implements CommandsInterface {
     private String inputCategory = null;
 
     //Constructor
-
+    @SneakyThrows
     public Sort() {
         //Get xml config parameters
-        try {
-            xmlConfig = new XmlProcessingUtil().getXmlConfig();
-        } catch (ParserConfigurationException | SAXException | IOException e) {
-            e.printStackTrace();
-        }
-
+        xmlConfig = new XmlProcessingUtil().getXmlConfig();
         //Init comparator
         productComparator = comparatorReverser(new NameComparator())
                 .thenComparing(comparatorReverser(new PriceComparator())
@@ -44,16 +38,15 @@ public class Sort implements CommandsInterface {
     }
 
     @Override
+    @SneakyThrows
     public void execute() {
-        try {
+        List<String> stackTrace = new ArrayList();
+        Arrays.stream(Thread.currentThread().getStackTrace()).forEach(i->stackTrace.add(i.getClassName()));
             makeProductSortingList()
                     .stream()
                     .sorted(productComparator)
                     .forEach(System.out::println);
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("Sorry we have some problems!\r\nTry again.");
-        }
+
 
     }
 
@@ -69,6 +62,31 @@ public class Sort implements CommandsInterface {
         while (categorySet.next()) {
                 categoryMap.put(categorySet.getString(2),categorySet.getInt(1));
             }
+        List<String> stackTrace = new ArrayList();
+        Arrays.stream(Thread.currentThread().getStackTrace()).forEach(i->stackTrace.add(i.getClassName()));
+        inputCategory = checkStackTrace(stackTrace,"httpserver")? "All":clientSortConsoleDialog();
+        if (inputCategory.equals("All")) {
+                System.out.println("== All categories ==");
+                categoryMap.forEach((key1, value) -> {
+                    addSortList(getDataFromDB(TemplateQueryEnum.GET_PRODUCT_LIST_BY_CATEGORY.getQuery()
+                                                ,value));
+                });
+                System.out.println(sortProducts);
+                return sortProducts;
+        }
+        if (categoryMap.containsKey(inputCategory)) {
+                addSortList(getDataFromDB(TemplateQueryEnum.GET_PRODUCT_LIST_BY_CATEGORY.getQuery()
+                                        , categoryMap.get(inputCategory)));
+                return sortProducts;
+            }
+        System.out.println("Unknown category!\r\nPlease try again.");
+        return null;
+
+
+
+    }
+
+    private String clientSortConsoleDialog(){
         System.out.println("Choose category to sort");
         //Print categories for client
         ListCategories listCategories = new ListCategories();
@@ -76,32 +94,20 @@ public class Sort implements CommandsInterface {
         //Add possibility to sort and print all products
         System.out.println("All");
         System.out.print("Input category --> ");
-        inputCategory = StreamUtil.getInputData();
-        if (inputCategory.equals("All")) {
-            System.out.println("== All categories ==");
-             categoryMap.forEach((key1, value) -> {
-                 ResultSet productSet = DBClientUtil.exec(
-                         String.format(TemplateQueryEnum.GET_PRODUCT_LIST_BY_CATEGORY.getQuery(), value));
-                 addSortList(productSet);
-             });
-            return sortProducts;
-        }
-        if (categoryMap.containsKey(inputCategory)) {
-            ResultSet productSet = DBClientUtil.exec(String.format(
-                    TemplateQueryEnum.GET_PRODUCT_LIST_BY_CATEGORY.getQuery(), categoryMap.get(inputCategory)));
-            addSortList(productSet);
-        } else {
-            System.out.println("Unknown category!\r\nPlease try again.");
-            return null;
-        }
-        return sortProducts;
+        return StreamUtil.getInputData();
+
     }
+
+    private ResultSet getDataFromDB(String query,Integer param){
+        return DBClientUtil.exec(String.format(query,param));
+    }
+
     @SneakyThrows
     private void addSortList(ResultSet productSet){
         while (productSet.next()) {
             sortProducts.add(new Product(
                     productSet.getString(productSet.findColumn("product_name")),
-                    (float) productSet.getInt(productSet.findColumn("product_rate")),
+                    (float) productSet.getDouble(productSet.findColumn("product_rate")),
                     (float) productSet.getDouble(productSet.findColumn("product_price"))));
         }
     }
