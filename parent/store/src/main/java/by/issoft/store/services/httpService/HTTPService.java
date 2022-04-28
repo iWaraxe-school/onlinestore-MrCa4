@@ -2,6 +2,8 @@ package by.issoft.store.services.httpService;
 
 import by.issoft.store.services.httpService.handlers.*;
 import by.issoft.store.utils.commandUtils.FabricCommands;
+import com.sun.net.httpserver.BasicAuthenticator;
+import com.sun.net.httpserver.HttpContext;
 import com.sun.net.httpserver.HttpServer;
 import lombok.SneakyThrows;
 
@@ -51,12 +53,25 @@ public class HTTPService {
             return httpService;
         }
 
+        private void setSecurity(HttpContext hc){
+            hc.setAuthenticator(new BasicAuthenticator("get") {
+                @Override
+                public boolean checkCredentials(String user, String pwd) {
+                    return user.equals("admin") && pwd.equals("admin");
+                }
+            });
+        }
+
         @SneakyThrows
         public  void startHttpServer() {
             HttpServer server = HttpServer.create(new InetSocketAddress(8080), 0);
+            //TODO
+            setSecurity(server.createContext("/index", new IndexHandler()));
+
+
             server.createContext("/index", new IndexHandler());
             server.createContext("/categories", new CategoryHandler());
-            server.createContext("/products", new ProductHandler());
+            server.createContext("/products/", new ProductHandler());
             server.createContext("/top5", new ProductHandler());
             server.createContext("/templates/", new TemplateHandler());
             server.createContext("/static/", new StaticHandler());

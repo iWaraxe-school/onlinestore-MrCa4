@@ -31,7 +31,9 @@ public class TemplateProcessingUtil {
             , String injectTag){
 //        Document html = Jsoup.parse(template);
         String renderString = modelData.stream()
-                .map(element -> (!element.contains("[")) ? String.format(renderPattern,element):element+"<br>")
+                .map(element -> (!element.contains("["))
+                        ? String.format(renderPattern,element,element,element)
+                        :"<p class=\"categ\">"+element+"</p><br>")
                 .reduce("", String::concat);
         return template.replace(injectTag,renderString);
     }
