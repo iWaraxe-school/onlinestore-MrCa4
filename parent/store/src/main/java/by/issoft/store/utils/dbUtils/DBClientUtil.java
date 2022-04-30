@@ -39,13 +39,13 @@ public class DBClientUtil {
         public static ResultSet exec(String query){
                 System.out.println(query);
                 CachedRowSet cs = new CachedRowSetImpl();
-                ResultSet  resultSet = null;
+                ResultSet  resultSet;
                 if(query.toLowerCase().startsWith("select")) {
                         resultSet = DBClientUtil.getDBClientUtil().statement.executeQuery(query);
                         cs.populate(resultSet);
                 }
                 else{
-                     DBClientUtil.getDBClientUtil().statement.executeUpdate(query);
+                        DBClientUtil.getDBClientUtil().statement.executeUpdate(query);
                 }
 
             return cs;

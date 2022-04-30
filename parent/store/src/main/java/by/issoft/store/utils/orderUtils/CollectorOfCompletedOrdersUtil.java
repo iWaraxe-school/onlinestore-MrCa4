@@ -1,6 +1,7 @@
 package by.issoft.store.utils.orderUtils;
 
 import by.issoft.store.Store;
+import by.issoft.store.services.httpService.HTTPService;
 
 public class CollectorOfCompletedOrdersUtil implements Runnable {
 
@@ -19,7 +20,9 @@ public class CollectorOfCompletedOrdersUtil implements Runnable {
         while (true) {
             synchronized (Store.completedOrders) {
                 Store.completedOrders.clear();
+
             }
+            HTTPService.clearOrderMap();
             System.out.println("Clear completed order list");
             try {
                 Thread.sleep(120_000);

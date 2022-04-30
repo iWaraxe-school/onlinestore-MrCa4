@@ -2,6 +2,7 @@ package by.issoft.store;
 
 import by.issoft.domain.Category.Category;
 import by.issoft.store.services.httpService.HTTPService;
+import by.issoft.store.utils.commandUtils.OrderCommandList;
 import by.issoft.store.utils.populators.RandomStoreDBPopulator;
 import by.issoft.store.utils.populators.RandomStorePopulator;
 import by.issoft.store.utils.StreamUtil;
@@ -24,6 +25,7 @@ public class Store {
     private RandomStoreDBPopulator randomStoreDBPopulator = new RandomStoreDBPopulator();
     private static String command = null;
     public static FabricCommands storeFabricCommands;
+    public static FabricCommands orderFabricCommands;
     public static FabricCommands admFabricCommands = new AdminCommandList();
     public static List<Order> completedOrders = new ArrayList<>();
 
@@ -43,8 +45,9 @@ public class Store {
 //        }
         if (storageType.equals("database")){
         storeFabricCommands = new StoreInDatabaseCommandList();
+        orderFabricCommands = new OrderCommandList();
         randomStoreDBPopulator.process();
-            HTTPService httpService = HTTPService.getHTTPService(storeFabricCommands);
+            HTTPService httpService = HTTPService.getHTTPService(storeFabricCommands,orderFabricCommands);
             httpService.startHttpServer();
         }
         else{

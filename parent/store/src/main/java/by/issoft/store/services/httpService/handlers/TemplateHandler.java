@@ -1,5 +1,6 @@
 package by.issoft.store.services.httpService.handlers;
 
+import by.issoft.store.services.authService.SessionInterface;
 import by.issoft.store.utils.httpUtils.TemplateProcessingUtil;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
@@ -7,12 +8,15 @@ import com.sun.net.httpserver.HttpHandler;
 import java.io.IOException;
 import java.io.OutputStream;
 
-public class TemplateHandler implements HttpHandler{
+public class TemplateHandler implements HttpHandler, SessionInterface {
 
 
         @Override
         public void handle(HttpExchange t) throws IOException {
             String response;
+            if (!checkSessionId(t)){
+                t.getResponseHeaders().set("Set-Cookie","MySessionHeader="+generateSessionId());
+            }
             if (t.getRequestMethod().toLowerCase().equals("get")){
                 response = TemplateProcessingUtil.getTemplate(String.valueOf(t.getRequestURI()));
                 t.sendResponseHeaders(200, response.length());

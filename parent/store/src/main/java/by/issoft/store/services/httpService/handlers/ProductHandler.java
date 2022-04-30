@@ -1,5 +1,6 @@
 package by.issoft.store.services.httpService.handlers;
 
+import by.issoft.store.services.authService.SessionInterface;
 import by.issoft.store.services.httpService.HTMLPatternEnum;
 import by.issoft.store.services.httpService.HTTPService;
 import by.issoft.store.utils.httpUtils.TemplateProcessingUtil;
@@ -11,7 +12,7 @@ import java.io.OutputStream;
 
 import static by.issoft.store.services.httpService.HTTPService.getHttpStoreFabricCommands;
 
-public class ProductHandler implements HttpHandler{
+public class ProductHandler implements HttpHandler, SessionInterface {
 
 
     private void commandSwitch(HttpExchange t){
@@ -30,6 +31,9 @@ public class ProductHandler implements HttpHandler{
     @Override
     public void handle(HttpExchange t) throws IOException {
             String response;
+
+        if (!checkSessionId(t)){ setSessionId(t); }
+
             if (t.getRequestMethod().toLowerCase().equals("get")){
                 commandSwitch(t);
                 response = TemplateProcessingUtil.getTemplate(

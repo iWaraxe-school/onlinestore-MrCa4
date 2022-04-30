@@ -14,6 +14,8 @@ public class AddProduct  implements CommandsInterface {
 
     @Override
     public void execute(Object object) {
+
+
         Order order = (Order) object;
 //        order.storeCommands.exec("List Products");
 //        System.out.print("Write the product that should be added to the cart ->");
@@ -23,7 +25,7 @@ public class AddProduct  implements CommandsInterface {
 //                .filter(x -> x.getName().equals(getInputData()))
 //                .findFirst().orElse(null),1);
 
-                 order.cart.put(order.productList
+                 order.cart.put(Order.productList
                 .stream()
                 .parallel()
                 .findAny().orElse(null),1);
@@ -32,6 +34,6 @@ public class AddProduct  implements CommandsInterface {
 
     @Override
     public String toString() {
-        return "Add";
+        return "Add product";
     }
 }

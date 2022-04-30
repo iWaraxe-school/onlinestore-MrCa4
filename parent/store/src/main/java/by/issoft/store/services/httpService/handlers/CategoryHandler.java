@@ -1,5 +1,6 @@
 package by.issoft.store.services.httpService.handlers;
 
+import by.issoft.store.services.authService.SessionInterface;
 import by.issoft.store.services.httpService.HTMLPatternEnum;
 import by.issoft.store.services.httpService.HTTPService;
 import by.issoft.store.utils.httpUtils.TemplateProcessingUtil;
@@ -11,10 +12,11 @@ import java.io.OutputStream;
 
 import static by.issoft.store.services.httpService.HTTPService.getCategoryListCashe;
 
-public class CategoryHandler implements HttpHandler {
+public class CategoryHandler implements HttpHandler, SessionInterface {
     @Override
     public void handle(HttpExchange t) throws IOException {
         String response;
+        if (!checkSessionId(t)){ setSessionId(t); }
         if (t.getRequestMethod().toLowerCase().equals("get")){
             HTTPService.getHttpStoreFabricCommands().exec("List Category");
             response = TemplateProcessingUtil.getTemplate(

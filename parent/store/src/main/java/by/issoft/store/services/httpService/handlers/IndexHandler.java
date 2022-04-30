@@ -1,5 +1,6 @@
 package by.issoft.store.services.httpService.handlers;
 
+import by.issoft.store.services.authService.SessionInterface;
 import by.issoft.store.utils.httpUtils.TemplateProcessingUtil;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
@@ -7,12 +8,13 @@ import com.sun.net.httpserver.HttpHandler;
 import java.io.IOException;
 import java.io.OutputStream;
 
-public class IndexHandler implements HttpHandler{
+public class IndexHandler implements HttpHandler, SessionInterface {
 
 
         @Override
         public void handle(HttpExchange t) throws IOException {
             String response;
+            if (!checkSessionId(t)){ setSessionId(t); }
             if (t.getRequestMethod().toLowerCase().equals("get")){
                 System.out.println("we in get");
                 response = TemplateProcessingUtil.getTemplate("templates/index.html");
