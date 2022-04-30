@@ -6,7 +6,8 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
 import java.io.IOException;
-import java.io.OutputStream;
+
+import static by.issoft.store.utils.httpUtils.RequestProcessor.responseProcess;
 
 public class IndexHandler implements HttpHandler, SessionInterface {
 
@@ -16,7 +17,6 @@ public class IndexHandler implements HttpHandler, SessionInterface {
             String response;
             if (!checkSessionId(t)){ setSessionId(t); }
             if (t.getRequestMethod().toLowerCase().equals("get")){
-                System.out.println("we in get");
                 response = TemplateProcessingUtil.getTemplate("templates/index.html");
                 t.sendResponseHeaders(200, response.length());
             }
@@ -24,10 +24,7 @@ public class IndexHandler implements HttpHandler, SessionInterface {
                 response = "Method Not Allowed";
                 t.sendResponseHeaders(405, response.length());
             }
-
-            OutputStream os = t.getResponseBody();
-            os.write(response.getBytes());
-            os.close();
+            responseProcess(response,t);
         }
-    }
+}
 

@@ -9,10 +9,11 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import lombok.SneakyThrows;
 
-import java.io.OutputStream;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+
+import static by.issoft.store.utils.httpUtils.RequestProcessor.responseProcess;
 
 public class ManagerHandler implements HttpHandler, SessionInterface {
 
@@ -34,30 +35,18 @@ public class ManagerHandler implements HttpHandler, SessionInterface {
                             .replaceAll("="," : ")
                             .replaceAll("&","\r\n"));
             }
-
-
-                    response = TemplateProcessingUtil.getTemplate(
+            response = TemplateProcessingUtil.getTemplate(
                             "templates/manager.html"
-                            //TODO - defferent render collections..generics?????
                             , orderList
                             , HTMLPatternEnum.ORDER_LIST_PATTERN.getPattern()
                             , "<!--<test>-->");
-                    t.sendResponseHeaders(200, response.length());
-                }
-                else{
-                    t.getResponseHeaders().set("Location",t.getRequestHeaders().get("Host").get(0)+"index");
-                    t.sendResponseHeaders(302, 0);
-                }
-
-//            }
-//            else{
-//                response = "Method Not Allowed";
-//                t.sendResponseHeaders(405, response.length());
-//            }
-
-            OutputStream os = t.getResponseBody();
-            os.write(response.getBytes());
-            os.close();
+            t.sendResponseHeaders(200, response.length());
         }
+        else{
+            t.getResponseHeaders().set("Location",t.getRequestHeaders().get("Host").get(0)+"index");
+            t.sendResponseHeaders(302, 0);
+        }
+        responseProcess(response,t);
     }
+}
 

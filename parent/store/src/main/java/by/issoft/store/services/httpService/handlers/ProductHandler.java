@@ -8,9 +8,9 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
 import java.io.IOException;
-import java.io.OutputStream;
 
 import static by.issoft.store.services.httpService.HTTPService.getHttpStoreFabricCommands;
+import static by.issoft.store.utils.httpUtils.RequestProcessor.responseProcess;
 
 public class ProductHandler implements HttpHandler, SessionInterface {
 
@@ -30,28 +30,22 @@ public class ProductHandler implements HttpHandler, SessionInterface {
 
     @Override
     public void handle(HttpExchange t) throws IOException {
-            String response;
-
+        String response;
         if (!checkSessionId(t)){ setSessionId(t); }
-
-            if (t.getRequestMethod().toLowerCase().equals("get")){
+        if (t.getRequestMethod().toLowerCase().equals("get")){
                 commandSwitch(t);
                 response = TemplateProcessingUtil.getTemplate(
                         "templates/products.html"
-                        //TODO - defferent render collections..generics?????
                         , HTTPService.getCategoriesAndProductsList()
                         , HTMLPatternEnum.PRODUCTS_WITH_LINK_TO_ORDER.getPattern()
                         ,"<!--<test>-->");
                 t.sendResponseHeaders(200, response.length());
-            }
-            else{
+        }
+        else{
                 response = "Method Not Allowed";
                 t.sendResponseHeaders(405, response.length());
-            }
-
-            OutputStream os = t.getResponseBody();
-            os.write(response.getBytes());
-            os.close();
         }
+        responseProcess(response,t);
     }
+}
 

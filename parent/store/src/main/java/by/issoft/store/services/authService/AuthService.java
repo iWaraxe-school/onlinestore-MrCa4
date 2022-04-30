@@ -13,6 +13,7 @@ public class AuthService {
         hc.setAuthenticator(new BasicAuthenticator("get") {
             @Override
             public boolean checkCredentials(String user, String pwd) {
+                //TODO тут по идуи обращение к базе сравнение хэшей и тд)))
                 return user.equals("admin") && pwd.equals("admin");
             }
         });

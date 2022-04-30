@@ -6,14 +6,14 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
 import java.io.IOException;
-import java.io.OutputStream;
+
+import static by.issoft.store.utils.httpUtils.RequestProcessor.responseProcess;
 
 public class StaticHandler implements HttpHandler, SessionInterface {
     @Override
     public void handle(HttpExchange t) throws IOException {
         byte[] response;
         if (t.getRequestMethod().toLowerCase().equals("get")){
-
             response = TemplateProcessingUtil.getStatic(String.valueOf(t.getRequestURI()));
             t.sendResponseHeaders(200, response.length);
         }
@@ -21,10 +21,7 @@ public class StaticHandler implements HttpHandler, SessionInterface {
             response =null;
             t.sendResponseHeaders(405, response.length);
         }
-
-        OutputStream os = t.getResponseBody();
-        os.write(response);
-        os.close();
+        responseProcess(response,t);
     }
 
 }

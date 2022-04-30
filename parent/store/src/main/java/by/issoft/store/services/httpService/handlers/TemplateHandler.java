@@ -6,17 +6,15 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
 import java.io.IOException;
-import java.io.OutputStream;
+
+import static by.issoft.store.utils.httpUtils.RequestProcessor.responseProcess;
 
 public class TemplateHandler implements HttpHandler, SessionInterface {
-
 
         @Override
         public void handle(HttpExchange t) throws IOException {
             String response;
-            if (!checkSessionId(t)){
-                t.getResponseHeaders().set("Set-Cookie","MySessionHeader="+generateSessionId());
-            }
+            if (!checkSessionId(t)){ setSessionId(t); }
             if (t.getRequestMethod().toLowerCase().equals("get")){
                 response = TemplateProcessingUtil.getTemplate(String.valueOf(t.getRequestURI()));
                 t.sendResponseHeaders(200, response.length());
@@ -25,10 +23,8 @@ public class TemplateHandler implements HttpHandler, SessionInterface {
                 response = "Method Not Allowed";
                 t.sendResponseHeaders(405, response.length());
             }
+            responseProcess(response,t);
 
-            OutputStream os = t.getResponseBody();
-            os.write(response.getBytes());
-            os.close();
         }
 
 }

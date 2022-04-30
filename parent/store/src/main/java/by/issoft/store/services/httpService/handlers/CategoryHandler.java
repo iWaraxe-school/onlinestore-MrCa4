@@ -8,9 +8,9 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
 import java.io.IOException;
-import java.io.OutputStream;
 
 import static by.issoft.store.services.httpService.HTTPService.getCategoryListCashe;
+import static by.issoft.store.utils.httpUtils.RequestProcessor.responseProcess;
 
 public class CategoryHandler implements HttpHandler, SessionInterface {
     @Override
@@ -30,10 +30,7 @@ public class CategoryHandler implements HttpHandler, SessionInterface {
             response = "Method Not Allowed";
             t.sendResponseHeaders(405, response.length());
         }
-
-        OutputStream os = t.getResponseBody();
-        os.write(response.getBytes());
-        os.close();
+        responseProcess(response,t);;
     }
 }
 

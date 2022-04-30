@@ -37,7 +37,6 @@ public class DBClientUtil {
 
         @SneakyThrows
         public static ResultSet exec(String query){
-                System.out.println(query);
                 CachedRowSet cs = new CachedRowSetImpl();
                 ResultSet  resultSet;
                 if(query.toLowerCase().startsWith("select")) {

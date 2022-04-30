@@ -8,17 +8,13 @@ public enum HTMLPatternEnum {
     ORDER_HTML_PATTERN("<input name=\"product\" class=\"input\" value=\"%s\" size=100 readonly=1><br>"),
     ORDER_LIST_PATTERN("<textarea class=\"textarea\" rows=\"10\" cols=\"100\">%s</textarea><br>");
 
-
-
     private String pattern;
 
     public String getPattern() {
         return pattern;
     }
 
-
     HTMLPatternEnum(String pattern) {
         this.pattern = pattern;
-
     }
 }

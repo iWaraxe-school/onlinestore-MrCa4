@@ -16,49 +16,45 @@ import java.util.List;
 import java.util.Map;
 
 
-//TODO Handlers in separate package and 1 handler 1 class!!!
+
 public class HTTPService {
 
-        protected static HTTPService httpService=null;
+    private static FabricCommands httpStoreFabricCommands=null;
+    private static FabricCommands httpOrderFabricCommands=null;
+    private static List<String> categoryListCashe=null;
+    private static List<String> categoriesAndProductsList = null;
+    private static Map<String,List<String>> orderMap = new HashMap<>();
+
+    protected static HTTPService httpService=null;
+
 
     public static FabricCommands getHttpStoreFabricCommands() {
         return httpStoreFabricCommands;
     }
-
-    private static FabricCommands httpStoreFabricCommands=null;
-
     public static FabricCommands getHttpOrderFabricCommands() {
         return httpOrderFabricCommands;
+    }
+    public static List<String> getCategoryListCashe() {
+        return categoryListCashe;
+    }
+    public static List<String> getCategoriesAndProductsList() {
+        return categoriesAndProductsList;
+    }
+    public static Map<String, List<String>> getOrderMap() {
+        return orderMap;
     }
 
     public static void setHttpOrderFabricCommands(FabricCommands httpOrderFabricCommands) {
         HTTPService.httpOrderFabricCommands = httpOrderFabricCommands;
     }
 
-    private static FabricCommands httpOrderFabricCommands=null;
-
-
     public static void setCategoryListCacshe(List<String> categoryListCashe) {
         HTTPService.categoryListCashe = categoryListCashe;
     }
 
-    public static List<String> getCategoryListCashe() {
-        return categoryListCashe;
-    }
-
-    private static List<String> categoryListCashe=null;
 
     public static void setCategoriesAndProductsList( List<String> categoriesAndProductsList) {
         HTTPService.categoriesAndProductsList = categoriesAndProductsList;
-    }
-
-    public static List<String> getCategoriesAndProductsList() {
-        return categoriesAndProductsList;
-    }
-
-
-    public static Map<String, List<String>> getOrderMap() {
-        return orderMap;
     }
 
     public static void clearOrderMap(){
@@ -69,26 +65,21 @@ public class HTTPService {
         HTTPService.orderMap = orderMap;
     }
 
-    private static Map<String,List<String>> orderMap = new HashMap<>();
 
+    private HTTPService(){}
 
-
-    private static List<String> categoriesAndProductsList = null;
-
-        private HTTPService(){}
-
-        public static HTTPService getHTTPService(FabricCommands storeFabricCommands, FabricCommands orderFabricCommands){
+    public static HTTPService getHTTPService(FabricCommands storeFabricCommands
+                                            , FabricCommands orderFabricCommands){
             if (httpService == null){
                 httpStoreFabricCommands=storeFabricCommands;
                 httpOrderFabricCommands=orderFabricCommands;
                 httpService =new HTTPService();
             }
             return httpService;
-        }
+    }
 
-
-        @SneakyThrows
-        public  void startHttpServer() {
+    @SneakyThrows
+    public  void startHttpServer() {
             HttpServer server = HttpServer.create(new InetSocketAddress(8080), 0);
             server.createContext("/",new IndexHandler());
             server.createContext("/index", new IndexHandler());
@@ -103,11 +94,10 @@ public class HTTPService {
             AuthService.setSecurity(server.createContext("/manager", new ManagerHandler()));
             server.setExecutor(null);
             server.start();
+    }
 
-        }
-
-        @SneakyThrows
-        public static String readPostData(HttpExchange t){
+    @SneakyThrows
+    public static String readPostData(HttpExchange t){
             InputStreamReader isr =  new InputStreamReader(t.getRequestBody(), StandardCharsets.UTF_8);
             BufferedReader br = new BufferedReader(isr);
             int b;
@@ -118,13 +108,6 @@ public class HTTPService {
             br.close();
             isr.close();
             return buf.toString();
-        }
-
-
-
-
-
-
-
+    }
 
 }
