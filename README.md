@@ -1,4 +1,4 @@
-<img src="./demo.gif" alt="My Project GIF" width="500" height="600">
+<img src="./demo.gif" alt="My Project GIF" width="360" height="720">
 
 ### 8. HTTP
 
