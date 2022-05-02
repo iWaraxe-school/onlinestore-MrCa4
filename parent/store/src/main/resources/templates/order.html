@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+  .input  {
+           background-color: #b0c4de;
+           color: white;
+           border: 0px;
+       }
+  .categ {
+      color: aliceblue;
+      resize:horizontal;
+      resize: vertical;
+      text-decoration: none;
+      font-stretch: expanded;
+      font-weight: 600;
+      font-family: Times New Roman;
+      Font-size:30px;
+      padding: 10px 15px;
+      position: initial;
+
+  }
+  .but  {
+      background-color: #28983a;
+      color: white;
+      border: 0.1em;
+  }
+  </style>
+</head>
+<body bgcolor="#b0c4de">
+<h2>Your order:</h2>
+<form action="/confirm" id="submit" method="POST">
+<!--<test>-->
+
+    <label for="start">Delivery date:</label><br>
+    <input type="date" id="start" name="delivery_date"
+           value="2022-01-01"
+           min="2022-01-01" max="2023vm-12-31"><br>
+    <label for="start">Delivery address:</label><br>
+    <input name="Address" value=" "  size=100><br>
+    <label for="start">Phone:</label><br>
+    <input name="phone" value=" "  size=100><br>
+    <label for="start">Comment:</label><br>
+    <input name="comment" value=" "  size=100><br><br>
+    <input type="submit"  value="Confirm Order"><br>
+</form>
+<br><br>
+</body>
+</html>

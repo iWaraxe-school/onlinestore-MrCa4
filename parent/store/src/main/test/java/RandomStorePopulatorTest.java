@@ -1,4 +1,4 @@
-import by.issoft.store.utils.RandomStorePopulator;
+import by.issoft.store.utils.populators.RandomStorePopulator;
 import org.junit.*;
 
 import java.util.ArrayList;

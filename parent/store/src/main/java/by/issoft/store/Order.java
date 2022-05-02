@@ -28,8 +28,6 @@ public class Order {
         getProducts();
         this.orderNumber= RandomStringUtils.random(1,1,1000000,true,true);
     }
-
-    
     public void setShopperName(String shopperName) {
         this.shopperName = shopperName;
     }

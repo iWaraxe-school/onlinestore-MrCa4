@@ -1,8 +1,13 @@
 package by.issoft.store.utils.dbUtils;
 
+import com.sun.rowset.CachedRowSetImpl;
 import lombok.SneakyThrows;
 
-import java.sql.*;
+import javax.sql.rowset.CachedRowSet;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
 public class DBClientUtil {
         private static DBClientUtil dbClientUtil= null;
@@ -32,15 +37,17 @@ public class DBClientUtil {
 
         @SneakyThrows
         public static ResultSet exec(String query){
-                System.out.println(query);
-                ResultSet resultSet = null;
+                CachedRowSet cs = new CachedRowSetImpl();
+                ResultSet  resultSet;
                 if(query.toLowerCase().startsWith("select")) {
                         resultSet = DBClientUtil.getDBClientUtil().statement.executeQuery(query);
+                        cs.populate(resultSet);
                 }
                 else{
-                     DBClientUtil.getDBClientUtil().statement.executeUpdate(query);
+                        DBClientUtil.getDBClientUtil().statement.executeUpdate(query);
                 }
-            return resultSet;
+
+            return cs;
         }
 }
 

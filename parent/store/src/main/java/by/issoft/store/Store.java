@@ -1,13 +1,14 @@
 package by.issoft.store;
 
 import by.issoft.domain.Category.Category;
-import by.issoft.store.utils.RandomStoreDBPopulator;
-import by.issoft.store.utils.RandomStorePopulator;
+import by.issoft.store.services.httpService.HTTPService;
+import by.issoft.store.utils.commandUtils.OrderCommandList;
+import by.issoft.store.utils.populators.RandomStoreDBPopulator;
+import by.issoft.store.utils.populators.RandomStorePopulator;
 import by.issoft.store.utils.StreamUtil;
 import by.issoft.store.utils.commandUtils.AdminCommandList;
 import by.issoft.store.utils.commandUtils.FabricCommands;
 import by.issoft.store.utils.commandUtils.StoreInDatabaseCommandList;
-import by.issoft.store.utils.commandUtils.StoreInMemoryCommandList;
 import by.issoft.store.utils.orderUtils.CollectorOfCompletedOrdersUtil;
 
 import java.util.ArrayList;
@@ -24,6 +25,7 @@ public class Store {
     private RandomStoreDBPopulator randomStoreDBPopulator = new RandomStoreDBPopulator();
     private static String command = null;
     public static FabricCommands storeFabricCommands;
+    public static FabricCommands orderFabricCommands;
     public static FabricCommands admFabricCommands = new AdminCommandList();
     public static List<Order> completedOrders = new ArrayList<>();
 
@@ -36,14 +38,17 @@ public class Store {
     }
 
     public void StoreInitMethod(String storageType){
-        if (storageType.equals("reflection")) {
-            storeFabricCommands = new StoreInMemoryCommandList();
-             setCategoryList(randomStorePopulator.getAllCategories());
-             setAllProducts();
-        }
+//        if (storageType.equals("reflection")) {
+//            storeFabricCommands = new StoreInMemoryCommandList();
+//             setCategoryList(randomStorePopulator.getAllCategories());
+//             setAllProducts();
+//        }
         if (storageType.equals("database")){
         storeFabricCommands = new StoreInDatabaseCommandList();
+        orderFabricCommands = new OrderCommandList();
         randomStoreDBPopulator.process();
+            HTTPService httpService = HTTPService.getHTTPService(storeFabricCommands,orderFabricCommands);
+            httpService.startHttpServer();
         }
         else{
             System.out.println("Invalid store Type");
